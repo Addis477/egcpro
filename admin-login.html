@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EGC Global | Admin Login</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body style="display: flex; align-items: center; justify-content: center; min-height: 100vh;">
+
+<div class="card" style="max-width: 450px; width: 90%; margin: 2rem auto;">
+  <div style="text-align: center;">
+    <i class="fas fa-lock" style="font-size: 3rem; color: var(--gold);"></i>
+    <h2>Admin Login</h2>
+    <p style="color: #aaa;">Enter your credentials to access the dashboard</p>
+  </div>
+  
+  <div id="loginAlert"></div>
+  
+  <form id="loginForm">
+    <div class="form-group">
+      <label><i class="fas fa-user-shield"></i> Username</label>
+      <input type="text" id="username" required>
+    </div>
+    <div class="form-group">
+      <label><i class="fas fa-key"></i> Password</label>
+      <input type="password" id="password" required>
+    </div>
+    <button type="submit" class="btn-gold" style="width: 100%;"><i class="fas fa-sign-in-alt"></i> Login</button>
+  </form>
+  
+  <p style="text-align: center; margin-top: 1.5rem; font-size: 0.8rem; color: #888;">
+    Default: admin / admin123
+  </p>
+</div>
+
+<script>
+  document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    
+    // Check credentials (simple auth for demo)
+    if (username === 'admin' && password === 'admin123') {
+      localStorage.setItem('egc_admin_logged_in', 'true');
+      window.location.href = 'admin-dashboard.html';
+    } else {
+      const alertDiv = document.getElementById('loginAlert');
+      alertDiv.innerHTML = '<div class="alert alert-error"><i class="fas fa-exclamation-triangle"></i> Invalid username or password</div>';
+      setTimeout(() => alertDiv.innerHTML = '', 3000);
+    }
+  });
+</script>
+</body>
+</html>
