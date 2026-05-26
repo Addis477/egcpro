@@ -6,54 +6,392 @@
   <title>News & Events | EGC Global Training Centre</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- AOS Animation Library -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    
     :root {
-      --gold: #d4af5a; --gold-light: #e6c97e; --dark-bg: #0a0c0f;
-      --card-bg: rgba(26, 32, 38, 0.9); --ivory: #f2ede4;
+      --gold: #d4af5a;
+      --gold-light: #e6c97e;
+      --gold-dark: #b8923e;
+      --dark-bg: #0a0c0f;
+      --card-bg: rgba(26, 32, 38, 0.85);
+      --ivory: #f2ede4;
+      --glow: rgba(212, 175, 90, 0.4);
     }
-    body { font-family: 'Montserrat', sans-serif; background: var(--dark-bg); color: var(--ivory); }
-    .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; background: rgba(10,12,15,0.9); backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 99; border-bottom: 1px solid rgba(212,175,90,0.25); }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--dark-bg);
+      color: var(--ivory);
+      overflow-x: hidden;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #121418; }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+
+    /* Animated Background */
+    .animated-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      background: radial-gradient(circle at 20% 30%, #0f1a1f, #050708);
+    }
+    
+    /* Floating Gemstones */
+    .floating-gem {
+      position: fixed;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.12;
+      animation: floatGem 20s infinite ease-in-out;
+    }
+    
+    @keyframes floatGem {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-30px) rotate(10deg); }
+    }
+    
+    /* Glowing Gem Icon */
+    .glowing-gem {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      filter: drop-shadow(0 0 8px var(--gold));
+      animation: gemPulse 2s infinite;
+    }
+    
+    @keyframes gemPulse {
+      0%, 100% { filter: drop-shadow(0 0 5px var(--gold)); transform: scale(1); }
+      50% { filter: drop-shadow(0 0 20px var(--gold)); transform: scale(1.05); }
+    }
+    
+    /* Premium Card Styles */
+    .premium-card {
+      background: linear-gradient(135deg, rgba(26, 32, 38, 0.9), rgba(18, 22, 28, 0.95));
+      backdrop-filter: blur(12px);
+      border-radius: 28px;
+      border: 1px solid rgba(212, 175, 90, 0.2);
+      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .premium-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(212, 175, 90, 0.1), transparent);
+      transition: left 0.6s ease;
+    }
+    
+    .premium-card:hover::before {
+      left: 100%;
+    }
+    
+    .premium-card:hover {
+      transform: translateY(-12px);
+      border-color: var(--gold);
+      box-shadow: 0 25px 45px -12px rgba(212, 175, 90, 0.3), 0 0 20px rgba(212, 175, 90, 0.2);
+    }
+    
+    /* Navigation */
+    .top-bar {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem 2rem; background: rgba(10,12,15,0.85); backdrop-filter: blur(12px);
+      position: sticky; top: 0; z-index: 99; border-bottom: 1px solid rgba(212,175,90,0.25);
+      animation: slideDown 0.5s ease;
+    }
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
     .logo h1 { font-size: 1.6rem; background: linear-gradient(135deg, var(--gold-light), var(--gold)); -webkit-background-clip: text; background-clip: text; color: transparent; }
     .logo p { font-size: 0.65rem; letter-spacing: 2.5px; color: var(--gold); }
     .desktop-nav { display: none; gap: 2rem; align-items: center; }
-    .desktop-nav a { color: var(--ivory); text-decoration: none; font-weight: 500; transition: 0.2s; }
-    .desktop-nav a:hover, .desktop-nav a.active { color: var(--gold); }
+    .desktop-nav a { color: var(--ivory); text-decoration: none; font-weight: 500; transition: all 0.3s; position: relative; }
+    .desktop-nav a::after {
+      content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px;
+      background: var(--gold); transition: width 0.3s;
+    }
+    .desktop-nav a:hover::after, .desktop-nav a.active::after { width: 100%; }
+    .desktop-nav a:hover { color: var(--gold); }
     .register-btn { background: var(--gold); color: #000 !important; padding: 0.5rem 1.3rem; border-radius: 40px; font-weight: 700 !important; }
-    .menu-icon { font-size: 1.8rem; color: var(--gold); cursor: pointer; }
+    .register-btn::after { display: none; }
+    .menu-icon { font-size: 1.8rem; color: var(--gold); cursor: pointer; transition: transform 0.2s; }
+    .menu-icon:hover { transform: scale(1.1); }
     @media (min-width: 992px) { .menu-icon { display: none; } .desktop-nav { display: flex; } }
-    .nav-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10,12,15,0.95); backdrop-filter: blur(12px); z-index: 1000; visibility: hidden; opacity: 0; transition: all 0.3s; }
+    
+    /* Side Navigation */
+    .nav-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(10, 12, 15, 0.95); backdrop-filter: blur(12px);
+      z-index: 1000; visibility: hidden; opacity: 0; transition: all 0.3s ease;
+    }
     .nav-overlay.active { visibility: visible; opacity: 1; }
-    .side-nav { position: fixed; top: 0; right: -100%; width: min(85%, 380px); height: 100%; background: linear-gradient(165deg, #12181f 0%, #0a0e12 100%); box-shadow: -8px 0 40px rgba(0,0,0,0.6); z-index: 1001; transition: right 0.35s; padding: 2rem 1.8rem; display: flex; flex-direction: column; border-left: 2px solid var(--gold); }
+    .side-nav {
+      position: fixed; top: 0; right: -100%; width: min(85%, 380px); height: 100%;
+      background: linear-gradient(165deg, #12181f 0%, #0a0e12 100%);
+      box-shadow: -8px 0 40px rgba(0,0,0,0.6); z-index: 1001;
+      transition: right 0.35s cubic-bezier(0.2,0.9,0.4,1.1);
+      padding: 2rem 1.8rem; display: flex; flex-direction: column;
+      border-left: 2px solid var(--gold);
+    }
     .side-nav.open { right: 0; }
     .close-nav { background: none; border: none; color: var(--gold); font-size: 2rem; cursor: pointer; align-self: flex-end; }
     .side-nav ul { list-style: none; flex: 1; }
     .side-nav li { margin: 1.5rem 0; }
-    .side-nav a { color: var(--ivory); text-decoration: none; font-size: 1.2rem; font-weight: 500; display: flex; align-items: center; gap: 14px; }
+    .side-nav a { color: var(--ivory); text-decoration: none; font-size: 1.2rem; font-weight: 500; display: flex; align-items: center; gap: 14px; transition: 0.25s; }
     .side-nav a i { width: 28px; color: var(--gold); }
     .side-nav a:hover { color: var(--gold); transform: translateX(8px); }
+    .side-footer { margin-top: auto; padding-top: 1.5rem; font-size: 0.75rem; color: #8d9a9e; border-top: 1px solid rgba(212,175,90,0.2); text-align: center; }
+    
+    /* Container */
     .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
     section { padding: 3rem 0; }
-    .section-title { font-size: 2.5rem; font-weight: 700; position: relative; display: inline-block; margin-bottom: 2rem; }
-    .section-title:after { content: ''; position: absolute; bottom: -10px; left: 0; width: 60px; height: 3px; background: linear-gradient(90deg, var(--gold), transparent); }
-    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; }
-    .news-card { background: var(--card-bg); border-radius: 20px; overflow: hidden; transition: transform 0.3s; cursor: pointer; }
-    .news-card:hover { transform: translateY(-5px); }
-    .news-image { width: 100%; height: 200px; background-size: cover; background-position: center; position: relative; }
-    .event-badge { position: absolute; top: 12px; right: 12px; background: var(--gold); color: #000; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.7rem; font-weight: bold; }
-    .news-content { padding: 1.5rem; }
-    .news-date { font-size: 0.75rem; color: var(--gold); margin-bottom: 0.5rem; }
-    .news-title { font-size: 1.2rem; margin-bottom: 0.75rem; }
-    .news-excerpt { font-size: 0.9rem; color: #b0b5b8; line-height: 1.5; }
-    .event-date { display: inline-block; background: rgba(212,175,90,0.15); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.7rem; margin-top: 0.75rem; }
-    .tab-buttons { display: flex; gap: 1rem; margin-bottom: 2rem; border-bottom: 1px solid rgba(212,175,90,0.3); padding-bottom: 0.5rem; flex-wrap: wrap; }
-    .tab-btn { background: none; border: none; color: var(--ivory); padding: 0.5rem 1.5rem; cursor: pointer; font-weight: 600; border-radius: 30px; transition: 0.2s; }
-    .tab-btn.active { background: var(--gold); color: #000; }
-    footer { background: #05080c; text-align: center; padding: 2rem; border-top: 1px solid rgba(212,175,90,0.15); }
-    @media (max-width: 768px) { .container { padding: 0 1.2rem; } .grid-2 { grid-template-columns: 1fr; } }
+    
+    /* Section Title */
+    .section-title {
+      font-size: 2.5rem; font-weight: 700; position: relative;
+      display: inline-block; margin-bottom: 2rem;
+    }
+    .section-title:after {
+      content: ''; position: absolute; bottom: -10px; left: 0;
+      width: 60px; height: 3px; background: linear-gradient(90deg, var(--gold), transparent);
+    }
+    
+    /* Grid Layout - More Cards */
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+    
+    /* News Card Premium */
+    .news-card {
+      background: linear-gradient(135deg, rgba(26, 32, 38, 0.9), rgba(18, 22, 28, 0.95));
+      backdrop-filter: blur(12px);
+      border-radius: 28px;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      cursor: pointer;
+      position: relative;
+      border: 1px solid rgba(212, 175, 90, 0.2);
+    }
+    
+    .news-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(212, 175, 90, 0.08), transparent);
+      transition: left 0.6s ease;
+    }
+    
+    .news-card:hover::before {
+      left: 100%;
+    }
+    
+    .news-card:hover {
+      transform: translateY(-12px);
+      border-color: var(--gold);
+      box-shadow: 0 25px 45px -12px rgba(212, 175, 90, 0.3);
+    }
+    
+    .news-image {
+      width: 100%;
+      height: 200px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      transition: transform 0.5s;
+    }
+    
+    .news-card:hover .news-image {
+      transform: scale(1.03);
+    }
+    
+    .event-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: #000;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: bold;
+      animation: badgePulse 1.5s infinite;
+    }
+    
+    @keyframes badgePulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(212, 175, 90, 0.4); }
+      50% { box-shadow: 0 0 0 5px rgba(212, 175, 90, 0); }
+    }
+    
+    .news-content {
+      padding: 1.5rem;
+    }
+    
+    .news-date {
+      font-size: 0.75rem;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    .news-title {
+      font-size: 1.2rem;
+      margin-bottom: 0.75rem;
+      line-height: 1.4;
+    }
+    
+    .news-excerpt {
+      font-size: 0.85rem;
+      color: #b0b5b8;
+      line-height: 1.5;
+    }
+    
+    .event-date-info {
+      display: inline-block;
+      background: rgba(212, 175, 90, 0.15);
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      margin-top: 0.75rem;
+    }
+    
+    .read-more {
+      display: inline-block;
+      margin-top: 1rem;
+      color: var(--gold);
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+    
+    .news-card:hover .read-more {
+      transform: translateX(5px);
+      text-shadow: 0 0 5px var(--gold);
+    }
+    
+    /* Tabs */
+    .tab-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid rgba(212, 175, 90, 0.3);
+      padding-bottom: 0.5rem;
+      flex-wrap: wrap;
+    }
+    
+    .tab-btn {
+      background: none;
+      border: none;
+      color: var(--ivory);
+      padding: 0.5rem 1.5rem;
+      cursor: pointer;
+      font-weight: 600;
+      border-radius: 30px;
+      transition: all 0.3s;
+    }
+    
+    .tab-btn.active {
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: #000;
+      box-shadow: 0 5px 15px rgba(212, 175, 90, 0.3);
+    }
+    
+    .tab-btn:hover:not(.active) {
+      background: rgba(212, 175, 90, 0.15);
+    }
+    
+    /* Buttons */
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid var(--gold);
+      color: var(--gold);
+      padding: 0.8rem 1.8rem;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .btn-outline:hover {
+      background: var(--gold);
+      color: #000;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px -8px rgba(212, 175, 90, 0.3);
+    }
+    
+    /* Load More Button */
+    .load-more-container {
+      text-align: center;
+      margin-top: 3rem;
+    }
+    
+    .btn-load-more {
+      background: linear-gradient(135deg, rgba(212, 175, 90, 0.2), rgba(212, 175, 90, 0.05));
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 0.8rem 2rem;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .btn-load-more:hover {
+      background: var(--gold);
+      color: #000;
+      transform: translateY(-3px);
+    }
+    
+    footer {
+      background: #05080c;
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid rgba(212, 175, 90, 0.15);
+      margin-top: 2rem;
+    }
+    
+    @media (max-width: 768px) {
+      .container { padding: 0 1.2rem; }
+      .news-grid { grid-template-columns: 1fr; }
+      .section-title { font-size: 2rem; }
+    }
   </style>
 </head>
 <body>
+
+<!-- Animated Background -->
+<div class="animated-bg"></div>
+<div class="floating-gem" style="top: 10%; left: 5%; animation-duration: 25s;">
+  <i class="fas fa-gem" style="font-size: 60px; color: var(--gold); opacity: 0.1;"></i>
+</div>
+<div class="floating-gem" style="bottom: 15%; right: 8%; animation-duration: 18s;">
+  <i class="fas fa-gem" style="font-size: 80px; color: var(--gold); opacity: 0.08;"></i>
+</div>
 
 <div class="top-bar">
   <div class="logo"><h1>EGC <span style="color:var(--gold);">Global</span></h1><p>TRAINING CENTRE</p></div>
@@ -69,9 +407,12 @@
   <button class="close-nav" id="closeNavBtn"><i class="fas fa-times"></i></button>
   <div class="side-logo"><h3>EGC <span>Global</span></h3><p>TRAINING CENTRE</p></div>
   <ul>
-    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li><li><a href="courses.html"><i class="fas fa-gem"></i> Courses</a></li>
-    <li><a href="about.html"><i class="fas fa-globe-africa"></i> About</a></li><li><a href="gallery.html"><i class="fas fa-images"></i> Gallery</a></li>
-    <li><a href="news.html"><i class="fas fa-newspaper"></i> News</a></li><li><a href="register.html"><i class="fas fa-user-plus"></i> Register</a></li>
+    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+    <li><a href="courses.html"><i class="fas fa-gem"></i> Courses</a></li>
+    <li><a href="about.html"><i class="fas fa-globe-africa"></i> About</a></li>
+    <li><a href="gallery.html"><i class="fas fa-images"></i> Gallery</a></li>
+    <li><a href="news.html"><i class="fas fa-newspaper"></i> News</a></li>
+    <li><a href="register.html"><i class="fas fa-user-plus"></i> Register</a></li>
     <li><a href="admin-login.html"><i class="fas fa-lock"></i> Admin</a></li>
   </ul>
   <div class="side-footer">© 2025 EGC Global</div>
@@ -79,23 +420,36 @@
 
 <section>
   <div class="container">
-    <h1 class="section-title">News & Events</h1>
-    <p>Stay updated with the latest from EGC Global Training Centre.</p>
+    <h1 class="section-title" data-aos="fade-right">
+      <i class="fas fa-newspaper glowing-gem" style="font-size: 2rem; margin-right: 10px;"></i> 
+      News & Events
+    </h1>
+    <p data-aos="fade-up">Stay updated with the latest from EGC Global Training Centre - workshops, grand opening, and industry insights.</p>
     
-    <div class="tab-buttons">
+    <div class="tab-buttons" data-aos="fade-up">
       <button class="tab-btn active" id="tabAll">📰 All Posts</button>
       <button class="tab-btn" id="tabEvents">🎉 Events</button>
       <button class="tab-btn" id="tabNews">📢 Announcements</button>
     </div>
     
-    <div id="allNewsList" class="grid-2"></div>
+    <div id="allNewsList" class="news-grid"></div>
+    
+    <div class="load-more-container" id="loadMoreContainer">
+      <button class="btn-load-more" id="loadMoreBtn"><i class="fas fa-plus-circle"></i> Load More News</button>
+    </div>
   </div>
 </section>
 
-<footer><p>© 2025 EGC Global Trading PLC – All Rights Reserved.</p></footer>
+<footer>
+  <p>© 2025 EGC Global Trading PLC – All Rights Reserved.</p>
+  <p style="margin-top: 0.5rem; font-size: 0.8rem;"><i class="fas fa-certificate"></i> Certified Gemstone Identification & Lapidary Training</p>
+</footer>
 
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-  // Mobile nav
+  AOS.init({ duration: 600, once: true });
+  
+  // Mobile Navigation
   const menuToggle = document.getElementById('menuToggle');
   const sideNav = document.getElementById('sideNav');
   const navOverlay = document.getElementById('navOverlay');
@@ -107,36 +461,98 @@
   if (navOverlay) navOverlay.addEventListener('click', closeNav);
   document.querySelectorAll('.side-nav a').forEach(link => link.addEventListener('click', closeNav));
 
+  // EXPANDED PLACEHOLDER DATA - MORE CARDS
+  (function initPlaceholderData() {
+    let existingNews = localStorage.getItem('egc_news');
+    if (!existingNews || JSON.parse(existingNews).length === 0) {
+      const placeholderNews = [
+        { id: 1001, title: "🎉 GRAND OPENING - EGC Global Training Centre", type: "event", image: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=800&h=400&fit=crop", excerpt: "Join us for the official inauguration of Ethiopia's premier gemstone training facility on June 28, 2025.", content: "<p>We are thrilled to announce the grand opening of EGC Global Training Centre! Located in front of the British Embassy, our state-of-the-art facility is ready to welcome students.</p><p>The event will feature live gemstone identification demonstrations, lapidary workshop tours, networking sessions, and special discounts for early registrations.</p>", date: "2025-06-28T10:00:00.000Z", eventDate: "June 28, 2025", eventTime: "10:00 AM - 4:00 PM", eventLocation: "Infront of British Embassy, Addis Ababa" },
+        { id: 1002, title: "🌟 Foreign Geologists Arrive in Addis Ababa", type: "announcement", image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=400&fit=crop", excerpt: "International gemology experts from USA, Germany, and India have arrived to lead our training programs.", content: "<p>We warmly welcome our international faculty members who bring decades of experience in gemstone identification and lapidary arts.</p>", date: "2025-06-20T00:00:00.000Z" },
+        { id: 1003, title: "📅 Free Orientation Week - July 1-5, 2025", type: "event", image: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=800&h=400&fit=crop", excerpt: "Experience our facilities and meet instructors during our free orientation week.", content: "<p>Prospective students are invited to attend our free orientation week. Get hands-on experience with gem identification tools, tour the lapidary workshop, and learn about career opportunities.</p>", date: "2025-06-15T00:00:00.000Z", eventDate: "July 1-5, 2025", eventTime: "9:00 AM - 5:00 PM", eventLocation: "EGC Global Training Centre" },
+        { id: 1004, title: "💎 Ethiopian Opals: Global Demand Rising 40%", type: "announcement", image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&h=400&fit=crop", excerpt: "Market report shows significant increase in demand for Ethiopian precious opals from European and Asian markets.", content: "<p>The global gemstone market is seeing unprecedented interest in Ethiopian opals. Our training program prepares students to meet this demand.</p>", date: "2025-06-10T00:00:00.000Z" },
+        { id: 1005, title: "🔧 Lapidary Workshop Equipment Arrives", type: "announcement", image: "https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=800&h=400&fit=crop", excerpt: "State-of-the-art faceting and polishing machines from Germany and Italy have been installed.", content: "<p>Our workshop is now equipped with professional-grade lapidary equipment from Germany and Italy.</p>", date: "2025-06-05T00:00:00.000Z" },
+        { id: 1006, title: "💰 Early Bird Registration Discount - Save 25%", type: "announcement", image: "https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=800&h=400&fit=crop", excerpt: "Register before July 15th and get 25% off on all courses plus free starter kit.", content: "<p>Take advantage of our early bird special! Register for any course before July 15, 2025, and receive 25% discount.</p>", date: "2025-06-01T00:00:00.000Z" },
+        { id: 1007, title: "🎓 Student Success Story: First Batch Graduates", type: "announcement", image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&h=400&fit=crop", excerpt: "Our first batch of gemology students successfully completed their certification with outstanding results.", content: "<p>Congratulations to our first graduating class! These students are now ready to enter the gemstone export business.</p>", date: "2025-05-25T00:00:00.000Z" },
+        { id: 1008, title: "🌍 International Gemstone Expo 2025", type: "event", image: "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=800&h=400&fit=crop", excerpt: "EGC Global will be exhibiting at the International Gemstone Expo in Dubai this November.", content: "<p>Visit our booth at the International Gemstone Expo to see Ethiopian gemstones and learn about our training programs.</p>", date: "2025-11-15T00:00:00.000Z", eventDate: "November 15-18, 2025", eventTime: "10:00 AM - 6:00 PM", eventLocation: "Dubai World Trade Centre" }
+      ];
+      localStorage.setItem('egc_news', JSON.stringify(placeholderNews));
+    }
+  })();
+
+  let currentFilter = 'all';
+  let visibleCount = 6;
+  let allItems = [];
+
   function getAllNews() {
     return JSON.parse(localStorage.getItem('egc_news') || '[]');
   }
 
-  function renderNews(filter = 'all') {
-    let allItems = getAllNews();
-    if (filter === 'event') allItems = allItems.filter(i => i.type === 'event');
-    else if (filter === 'announcement') allItems = allItems.filter(i => i.type === 'announcement');
-    const sorted = [...allItems].sort((a, b) => new Date(b.date) - new Date(a.date));
+  function getFilteredNews() {
+    let items = allItems;
+    if (currentFilter === 'event') items = allItems.filter(i => i.type === 'event');
+    else if (currentFilter === 'announcement') items = allItems.filter(i => i.type === 'announcement');
+    return [...items].sort((a, b) => new Date(b.date) - new Date(a.date));
+  }
+
+  function renderNews() {
+    const filtered = getFilteredNews();
+    const visibleItems = filtered.slice(0, visibleCount);
     const container = document.getElementById('allNewsList');
-    if (sorted.length === 0) { container.innerHTML = '<div class="card"><p>No posts yet. Check back soon!</p></div>'; return; }
-    container.innerHTML = sorted.map(item => `
-      <div class="news-card" onclick="location.href='news-detail.html?id=${item.id}'">
+    const loadMoreBtn = document.getElementById('loadMoreContainer');
+    
+    if (filtered.length === 0) {
+      container.innerHTML = '<div class="premium-card" style="padding: 3rem; text-align: center;"><i class="fas fa-newspaper glowing-gem" style="font-size: 3rem;"></i><p style="margin-top: 1rem;">No posts yet. Check back soon!</p></div>';
+      loadMoreBtn.style.display = 'none';
+      return;
+    }
+    
+    container.innerHTML = visibleItems.map(item => `
+      <div class="news-card" onclick="location.href='news-detail.html?id=${item.id}'" data-aos="fade-up" data-aos-delay="100">
         <div class="news-image" style="background-image: url('${item.image || 'https://placehold.co/800x400/2c3e50/d4af5a?text=' + encodeURIComponent(item.title)}');">
           ${item.type === 'event' ? '<div class="event-badge"><i class="fas fa-calendar-alt"></i> EVENT</div>' : ''}
         </div>
         <div class="news-content">
-          <div class="news-date"><i class="far fa-calendar-alt"></i> ${new Date(item.date).toLocaleDateString()}</div>
-          <h3 class="news-title">${item.title}</h3>
-          <p class="news-excerpt">${(item.excerpt || item.content?.substring(0, 100) || '')}...</p>
-          ${item.eventDate ? `<div class="event-date"><i class="fas fa-clock"></i> 📍 ${item.eventDate}</div>` : ''}
+          <div class="news-date">
+            <i class="far fa-calendar-alt"></i> ${new Date(item.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+          </div>
+          <h3 class="news-title">${item.title.length > 60 ? item.title.substring(0, 60) + '...' : item.title}</h3>
+          <p class="news-excerpt">${(item.excerpt || (item.content ? item.content.substring(0, 100) : 'Click to read more...'))}...</p>
+          ${item.eventDate ? `<div class="event-date-info"><i class="fas fa-clock"></i> 📍 ${item.eventDate}</div>` : ''}
+          <div class="read-more">Read full story <i class="fas fa-arrow-right"></i></div>
         </div>
       </div>
     `).join('');
+    
+    // Show/hide load more button
+    if (visibleCount >= filtered.length) {
+      loadMoreBtn.style.display = 'none';
+    } else {
+      loadMoreBtn.style.display = 'block';
+    }
   }
 
-  document.getElementById('tabAll').onclick = () => { renderNews('all'); document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active')); document.getElementById('tabAll').classList.add('active'); };
-  document.getElementById('tabEvents').onclick = () => { renderNews('event'); document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active')); document.getElementById('tabEvents').classList.add('active'); };
-  document.getElementById('tabNews').onclick = () => { renderNews('announcement'); document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active')); document.getElementById('tabNews').classList.add('active'); };
-  renderNews('all');
+  function loadMore() {
+    visibleCount += 3;
+    renderNews();
+  }
+
+  // Tab switching
+  function switchTab(filter, activeBtnId) {
+    currentFilter = filter;
+    visibleCount = 6;
+    renderNews();
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.getElementById(activeBtnId).classList.add('active');
+  }
+
+  document.getElementById('tabAll').onclick = () => switchTab('all', 'tabAll');
+  document.getElementById('tabEvents').onclick = () => switchTab('event', 'tabEvents');
+  document.getElementById('tabNews').onclick = () => switchTab('announcement', 'tabNews');
+  document.getElementById('loadMoreBtn').onclick = loadMore;
+
+  // Load data
+  allItems = getAllNews();
+  renderNews();
 </script>
 </body>
 </html>
