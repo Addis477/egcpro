@@ -2,55 +2,137 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EGC Global | Admin Login</title>
-  <link rel="stylesheet" href="css/style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-</head>
-<body style="display: flex; align-items: center; justify-content: center; min-height: 100vh;">
-
-<div class="card" style="max-width: 450px; width: 90%; margin: 2rem auto;">
-  <div style="text-align: center;">
-    <i class="fas fa-lock" style="font-size: 3rem; color: var(--gold);"></i>
-    <h2>Admin Login</h2>
-    <p style="color: #aaa;">Enter your credentials to access the dashboard</p>
-  </div>
-  
-  <div id="loginAlert"></div>
-  
-  <form id="loginForm">
-    <div class="form-group">
-      <label><i class="fas fa-user-shield"></i> Username</label>
-      <input type="text" id="username" required>
-    </div>
-    <div class="form-group">
-      <label><i class="fas fa-key"></i> Password</label>
-      <input type="password" id="password" required>
-    </div>
-    <button type="submit" class="btn-gold" style="width: 100%;"><i class="fas fa-sign-in-alt"></i> Login</button>
-  </form>
-  
-  <p style="text-align: center; margin-top: 1.5rem; font-size: 0.8rem; color: #888;">
-    Default: admin / admin123
-  </p>
-</div>
-
-<script>
-  document.getElementById('loginForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-    
-    // Check credentials (simple auth for demo)
-    if (username === 'admin' && password === 'admin123') {
-      localStorage.setItem('egc_admin_logged_in', 'true');
-      window.location.href = 'admin-dashboard.html';
-    } else {
-      const alertDiv = document.getElementById('loginAlert');
-      alertDiv.innerHTML = '<div class="alert alert-error"><i class="fas fa-exclamation-triangle"></i> Invalid username or password</div>';
-      setTimeout(() => alertDiv.innerHTML = '', 3000);
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0a0c0f, #1a1f2a);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-  });
-</script>
+    .login-card {
+      background: rgba(26, 31, 36, 0.95);
+      border-radius: 28px;
+      padding: 2.5rem;
+      width: 90%;
+      max-width: 450px;
+      border: 1px solid rgba(212, 175, 90, 0.3);
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+    }
+    .login-card h2 {
+      color: #d4af5a;
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+    .login-card p {
+      text-align: center;
+      color: #aaa;
+      margin-bottom: 2rem;
+    }
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #e6c97e;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(212, 175, 90, 0.3);
+      border-radius: 12px;
+      color: white;
+      font-size: 1rem;
+    }
+    .form-group input:focus {
+      outline: none;
+      border-color: #d4af5a;
+    }
+    .btn-login {
+      width: 100%;
+      background: #d4af5a;
+      color: #000;
+      padding: 0.8rem;
+      border: none;
+      border-radius: 40px;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn-login:hover {
+      background: #e6c97e;
+      transform: translateY(-2px);
+    }
+    .alert {
+      padding: 0.8rem;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    .alert-error {
+      background: rgba(231, 76, 60, 0.2);
+      border-left: 3px solid #e74c3c;
+      color: #e74c3c;
+    }
+    .demo-info {
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(212,175,90,0.2);
+      text-align: center;
+      font-size: 0.8rem;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <h2><i class="fas fa-lock"></i> Admin Login</h2>
+    <p>Enter your credentials to access dashboard</p>
+    
+    <div id="alertDiv"></div>
+    
+    <form id="loginForm">
+      <div class="form-group">
+        <label><i class="fas fa-user"></i> Username</label>
+        <input type="text" id="username" required autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-key"></i> Password</label>
+        <input type="password" id="password" required>
+      </div>
+      <button type="submit" class="btn-login"><i class="fas fa-sign-in-alt"></i> Login</button>
+    </form>
+    
+    <div class="demo-info">
+      <i class="fas fa-info-circle"></i> Demo credentials: <strong>admin</strong> / <strong>admin123</strong>
+    </div>
+  </div>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      
+      if (username === 'admin' && password === 'admin123') {
+        localStorage.setItem('egc_admin_logged_in', 'true');
+        window.location.href = 'admin-dashboard.html';
+      } else {
+        document.getElementById('alertDiv').innerHTML = '<div class="alert alert-error"><i class="fas fa-exclamation-triangle"></i> Invalid username or password</div>';
+        setTimeout(() => {
+          document.getElementById('alertDiv').innerHTML = '';
+        }, 3000);
+      }
+    });
+  </script>
 </body>
 </html>
