@@ -1,259 +1,83 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>EGC Global | Admin Dashboard</title>
-  <link rel="stylesheet" href="css/style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-</head>
-<body>
-
-<div class="top-bar">
-  <div class="logo"><h1>EGC <span style="color:var(--gold);">Admin</span></h1><p>DASHBOARD</p></div>
-  <div class="desktop-nav">
-    <span style="color: var(--gold);"><i class="fas fa-user-shield"></i> Welcome, Admin</span>
-    <a href="index.html" style="color: var(--danger);"><i class="fas fa-sign-out-alt"></i> Logout</a>
-  </div>
-</div>
-
-<div class="container" style="padding: 2rem;">
-  <div class="grid-2" style="margin-bottom: 2rem;">
-    <div class="card" style="text-align: center;">
-      <i class="fas fa-users" style="font-size: 2.5rem; color: var(--gold);"></i>
-      <h3 id="pendingCount">0</h3>
-      <p>Pending Registrations</p>
+<!-- Updated Add News Section with Image URL field -->
+<div id="addNewsSection" style="display: none;">
+  <h2>Create New News / Event Post</h2>
+  <form id="newsForm">
+    <div class="form-group">
+      <label>Post Type *</label>
+      <select id="newsType" required>
+        <option value="announcement">📢 Announcement / News</option>
+        <option value="event">🎉 Event (with date/location)</option>
+      </select>
     </div>
-    <div class="card" style="text-align: center;">
-      <i class="fas fa-newspaper" style="font-size: 2.5rem; color: var(--gold);"></i>
-      <h3 id="newsCount">0</h3>
-      <p>Total News Posts</p>
+    <div class="form-group">
+      <label>Title *</label>
+      <input type="text" id="newsTitle" required>
     </div>
-  </div>
-  
-  <!-- Tabs -->
-  <div style="display: flex; gap: 1rem; margin-bottom: 2rem; border-bottom: 1px solid rgba(212,175,90,0.3);">
-    <button class="btn-outline" id="tabRegistrations" style="background: var(--gold); color: #000;">📋 Registrations</button>
-    <button class="btn-outline" id="tabNews">📰 Manage News</button>
-    <button class="btn-outline" id="tabAddNews">➕ Add News</button>
-  </div>
-  
-  <!-- Registrations Section -->
-  <div id="registrationsSection">
-    <h2>Student Registrations <span style="font-size: 0.8rem;">(Click Approve to accept)</span></h2>
-    <div id="registrationsList"></div>
-  </div>
-  
-  <!-- Manage News Section (hidden by default) -->
-  <div id="manageNewsSection" style="display: none;">
-    <h2>Existing News Posts</h2>
-    <div id="newsList"></div>
-  </div>
-  
-  <!-- Add News Section (hidden by default) -->
-  <div id="addNewsSection" style="display: none;">
-    <h2>Create New News Post</h2>
-    <form id="newsForm">
-      <div class="form-group">
-        <label>Title *</label>
-        <input type="text" id="newsTitle" required>
-      </div>
-      <div class="form-group">
-        <label>Excerpt / Summary</label>
-        <input type="text" id="newsExcerpt">
-      </div>
-      <div class="form-group">
-        <label>Full Content *</label>
-        <textarea id="newsContent" rows="5" required></textarea>
-      </div>
-      <button type="submit" class="btn-gold"><i class="fas fa-paper-plane"></i> Publish News</button>
-    </form>
-  </div>
+    <div class="form-group">
+      <label>Image URL (optional - paste image link)</label>
+      <input type="text" id="newsImage" placeholder="https://images.unsplash.com/... or leave empty for auto">
+      <small style="color: #888;">Tip: Use free images from Unsplash, Pexels, or placehold.co</small>
+    </div>
+    <div class="form-group" id="eventDateGroup" style="display: none;">
+      <label>Event Date *</label>
+      <input type="text" id="eventDate" placeholder="e.g., June 28, 2025">
+    </div>
+    <div class="form-group" id="eventTimeGroup" style="display: none;">
+      <label>Event Time</label>
+      <input type="text" id="eventTime" placeholder="e.g., 10:00 AM - 4:00 PM">
+    </div>
+    <div class="form-group" id="eventLocationGroup" style="display: none;">
+      <label>Event Location</label>
+      <input type="text" id="eventLocation" placeholder="e.g., Infront of British Embassy, Addis Ababa">
+    </div>
+    <div class="form-group">
+      <label>Excerpt / Short Summary</label>
+      <input type="text" id="newsExcerpt">
+    </div>
+    <div class="form-group">
+      <label>Full Content * (HTML supported)</label>
+      <textarea id="newsContent" rows="6" required></textarea>
+    </div>
+    <button type="submit" class="btn-gold"><i class="fas fa-paper-plane"></i> Publish Post</button>
+  </form>
 </div>
 
 <script>
-  // Check if admin is logged in
-  if (localStorage.getItem('egc_admin_logged_in') !== 'true') {
-    window.location.href = 'admin-login.html';
-  }
-  
-  let currentRegistrations = [];
-  let currentNews = [];
-  
-  function loadData() {
-    currentRegistrations = JSON.parse(localStorage.getItem('egc_registrations') || '[]');
-    currentNews = JSON.parse(localStorage.getItem('egc_news') || '[]');
-    document.getElementById('pendingCount').innerText = currentRegistrations.filter(r => r.status === 'pending').length;
-    document.getElementById('newsCount').innerText = currentNews.length;
-    renderRegistrations();
-    renderNewsList();
-  }
-  
-  function renderRegistrations() {
-    const container = document.getElementById('registrationsList');
-    const pending = currentRegistrations.filter(r => r.status === 'pending');
-    const approved = currentRegistrations.filter(r => r.status === 'approved');
-    
-    container.innerHTML = `
-      <h3>Pending (${pending.length})</h3>
-      <table class="data-table">
-        <thead><tr><th>Name</th><th>Email/Phone</th><th>Course</th><th>Date</th><th>Action</th></tr></thead>
-        <tbody>
-          ${pending.map(r => `
-            <tr>
-              <td>${r.fullName}</td>
-              <td>${r.email}<br><small>${r.phone}</small></td>
-              <td>${r.course}</td>
-              <td>${new Date(r.registeredAt).toLocaleDateString()}</td>
-              <td>
-                <button class="action-btn btn-approve" onclick="approveRegistration(${r.id})"><i class="fas fa-check-circle"></i> Approve</button>
-                <button class="action-btn btn-delete" onclick="deleteRegistration(${r.id})"><i class="fas fa-trash"></i> Delete</button>
-              </td>
-            </tr>
-          `).join('') || '<tr><td colspan="5">No pending registrations</td></tr>'}
-        </tbody>
-      </table>
-      
-      <h3 style="margin-top: 2rem;">Approved (${approved.length})</h3>
-      <table class="data-table">
-        <thead><tr><th>Name</th><th>Email/Phone</th><th>Course</th><th>Approved</th></tr></thead>
-        <tbody>
-          ${approved.map(r => `
-            <tr>
-              <td>${r.fullName}</td>
-              <td>${r.email}<br><small>${r.phone}</small></td>
-              <td>${r.course}</td>
-              <td><span class="status-approved">✓ Approved</span></td>
-            </tr>
-          `).join('') || '<tr><td colspan="4">No approved registrations yet</td></tr>'}
-        </tbody>
-      </table>
-    `;
-  }
-  
-  function renderNewsList() {
-    const container = document.getElementById('newsList');
-    if (currentNews.length === 0) {
-      container.innerHTML = '<p>No news posts yet. Create your first one!</p>';
-      return;
-    }
-    container.innerHTML = `
-      <table class="data-table">
-        <thead><tr><th>Title</th><th>Date</th><th>Actions</th></tr></thead>
-        <tbody>
-          ${currentNews.map(n => `
-            <tr>
-              <td><strong>${n.title}</strong><br><small>${n.excerpt || n.content.substring(0, 60)}...</small></td>
-              <td>${new Date(n.date).toLocaleDateString()}</td>
-              <td>
-                <button class="action-btn btn-delete" onclick="deleteNews(${n.id})"><i class="fas fa-trash"></i> Delete</button>
-              </td>
-            </tr>
-          `).join('')}
-        </tbody>
-      </table>
-    `;
-  }
-  
-  function approveRegistration(id) {
-    currentRegistrations = currentRegistrations.map(r => 
-      r.id === id ? {...r, status: 'approved'} : r
-    );
-    localStorage.setItem('egc_registrations', JSON.stringify(currentRegistrations));
-    loadData();
-    showDashboardAlert('Registration approved successfully!', 'success');
-  }
-  
-  function deleteRegistration(id) {
-    if (confirm('Are you sure you want to delete this registration?')) {
-      currentRegistrations = currentRegistrations.filter(r => r.id !== id);
-      localStorage.setItem('egc_registrations', JSON.stringify(currentRegistrations));
-      loadData();
-      showDashboardAlert('Registration deleted.', 'success');
-    }
-  }
-  
-  function deleteNews(id) {
-    if (confirm('Delete this news post?')) {
-      currentNews = currentNews.filter(n => n.id !== id);
-      localStorage.setItem('egc_news', JSON.stringify(currentNews));
-      loadData();
-      showDashboardAlert('News post deleted.', 'success');
-    }
-  }
-  
-  function showDashboardAlert(message, type) {
-    const alertContainer = document.createElement('div');
-    alertContainer.className = `alert alert-${type}`;
-    alertContainer.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-info-circle'}"></i> ${message}`;
-    document.querySelector('.container').insertBefore(alertContainer, document.querySelector('.container').firstChild);
-    setTimeout(() => alertContainer.remove(), 3000);
-  }
-  
-  // Tab switching
-  document.getElementById('tabRegistrations').addEventListener('click', () => {
-    document.getElementById('registrationsSection').style.display = 'block';
-    document.getElementById('manageNewsSection').style.display = 'none';
-    document.getElementById('addNewsSection').style.display = 'none';
-    document.getElementById('tabRegistrations').style.background = 'var(--gold)';
-    document.getElementById('tabRegistrations').style.color = '#000';
-    document.getElementById('tabNews').style.background = 'transparent';
-    document.getElementById('tabNews').style.color = 'var(--gold)';
-    document.getElementById('tabAddNews').style.background = 'transparent';
-    document.getElementById('tabAddNews').style.color = 'var(--gold)';
+  // Show/hide event fields based on type selection
+  document.getElementById('newsType')?.addEventListener('change', function() {
+    const isEvent = this.value === 'event';
+    document.getElementById('eventDateGroup').style.display = isEvent ? 'block' : 'none';
+    document.getElementById('eventTimeGroup').style.display = isEvent ? 'block' : 'none';
+    document.getElementById('eventLocationGroup').style.display = isEvent ? 'block' : 'none';
   });
   
-  document.getElementById('tabNews').addEventListener('click', () => {
-    document.getElementById('registrationsSection').style.display = 'none';
-    document.getElementById('manageNewsSection').style.display = 'block';
-    document.getElementById('addNewsSection').style.display = 'none';
-    document.getElementById('tabNews').style.background = 'var(--gold)';
-    document.getElementById('tabNews').style.color = '#000';
-    document.getElementById('tabRegistrations').style.background = 'transparent';
-    document.getElementById('tabRegistrations').style.color = 'var(--gold)';
-    document.getElementById('tabAddNews').style.background = 'transparent';
-    document.getElementById('tabAddNews').style.color = 'var(--gold)';
-  });
-  
-  document.getElementById('tabAddNews').addEventListener('click', () => {
-    document.getElementById('registrationsSection').style.display = 'none';
-    document.getElementById('manageNewsSection').style.display = 'none';
-    document.getElementById('addNewsSection').style.display = 'block';
-    document.getElementById('tabAddNews').style.background = 'var(--gold)';
-    document.getElementById('tabAddNews').style.color = '#000';
-    document.getElementById('tabRegistrations').style.background = 'transparent';
-    document.getElementById('tabRegistrations').style.color = 'var(--gold)';
-    document.getElementById('tabNews').style.background = 'transparent';
-    document.getElementById('tabNews').style.color = 'var(--gold)';
-  });
-  
-  // Add news form
-  document.getElementById('newsForm').addEventListener('submit', function(e) {
+  // Updated news form submission
+  document.getElementById('newsForm')?.addEventListener('submit', function(e) {
     e.preventDefault();
-    const newNews = {
+    const isEvent = document.getElementById('newsType').value === 'event';
+    const newPost = {
       id: Date.now(),
       title: document.getElementById('newsTitle').value,
+      type: document.getElementById('newsType').value,
+      image: document.getElementById('newsImage').value || null,
       excerpt: document.getElementById('newsExcerpt').value,
       content: document.getElementById('newsContent').value,
       date: new Date().toISOString()
     };
-    currentNews.push(newNews);
+    
+    if (isEvent) {
+      newPost.eventDate = document.getElementById('eventDate').value;
+      newPost.eventTime = document.getElementById('eventTime').value;
+      newPost.eventLocation = document.getElementById('eventLocation').value;
+    }
+    
+    let currentNews = JSON.parse(localStorage.getItem('egc_news') || '[]');
+    currentNews.push(newPost);
     localStorage.setItem('egc_news', JSON.stringify(currentNews));
-    loadData();
+    
+    alert('Post published successfully!');
     document.getElementById('newsForm').reset();
-    showDashboardAlert('News published successfully!', 'success');
-    // Switch to manage news tab
-    document.getElementById('tabNews').click();
-  });
-  
-  loadData();
-  
-  // Logout handler
-  document.querySelector('.desktop-nav a[href="index.html"]').addEventListener('click', function(e) {
-    e.preventDefault();
-    localStorage.removeItem('egc_admin_logged_in');
-    window.location.href = 'index.html';
+    // Refresh the manage news table
+    location.reload();
   });
 </script>
-</body>
-</html>
