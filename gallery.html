@@ -1,6 +1,179 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><title>Gemstone Gallery | EGC Global</title><link rel="stylesheet" href="css/style.css"><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"></head>
-<body><div class="top-bar"><div class="logo"><h1>EGC <span style="color:var(--gold);">Global</span></h1><p>TRAINING CENTRE</p></div><div class="desktop-nav"><a href="index.html">Home</a><a href="courses.html">Courses</a><a href="about.html">About</a><a href="gallery.html" class="active">Gallery</a><a href="news.html">News</a><a href="register.html" class="register-btn">Register Now</a></div><div class="menu-icon" id="menuToggle"><i class="fas fa-bars"></i></div></div>
-<div class="nav-overlay" id="navOverlay"></div><div class="side-nav" id="sideNav"><button class="close-nav" id="closeNavBtn"><i class="fas fa-times"></i></button><div class="side-logo"><h3>EGC <span>Global</span></h3><p>TRAINING CENTRE</p></div><ul><li><a href="index.html"><i class="fas fa-home"></i> Home</a></li><li><a href="gallery.html"><i class="fas fa-images"></i> Gallery</a></li></ul><div class="side-footer">© 2025 EGC Global</div></div>
-<section style="padding: 3rem 0;"><div class="container"><h1 class="section-title">Gemstone Gallery</h1><div class="grid-3"><div class="card" style="text-align: center; min-height: 200px;"><i class="fas fa-gem" style="font-size: 4rem; color: var(--gold);"></i><h3>Ethiopian Opals</h3><p>World-renowned precious opals with vibrant play-of-color</p></div><div class="card" style="text-align: center; min-height: 200px;"><i class="fas fa-gem" style="font-size: 4rem; color: #2ecc71;"></i><h3>Emeralds</h3><p>Rich green emeralds from Ethiopia's emerging mines</p></div><div class="card" style="text-align: center; min-height: 200px;"><i class="fas fa-gem" style="font-size: 4rem; color: #3498db;"></i><h3>Sapphires</h3><p>Blue, pink, and yellow sapphires of exceptional clarity</p></div></div><p style="text-align: center; margin-top: 2rem;">Contact us to see our full collection at the training centre.</p></div></section>
-<footer><p>© 2025 EGC Global Trading PLC</p></footer><script src="js/main.js"></script></body></html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gemstone Gallery | EGC Global Training Centre</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+      cursor: pointer;
+    }
+    .gallery-img {
+      width: 100%;
+      height: 250px;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.4s ease;
+    }
+    .gallery-item:hover .gallery-img {
+      transform: scale(1.05);
+    }
+    .gallery-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.8));
+      padding: 1rem;
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+    }
+    .gallery-item:hover .gallery-overlay {
+      transform: translateY(0);
+    }
+    .gallery-overlay h4 {
+      color: var(--gold);
+      margin-bottom: 0.25rem;
+    }
+    .lightbox {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.95);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+    .lightbox.active {
+      display: flex;
+    }
+    .lightbox-img {
+      max-width: 90%;
+      max-height: 80%;
+      border-radius: 12px;
+      border: 3px solid var(--gold);
+    }
+    .close-lightbox {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 2.5rem;
+      color: var(--gold);
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="logo"><h1>EGC <span style="color:var(--gold);">Global</span></h1><p>TRAINING CENTRE</p></div>
+  <div class="desktop-nav">
+    <a href="index.html">Home</a><a href="courses.html">Courses</a><a href="about.html">About</a>
+    <a href="gallery.html" class="active">Gallery</a><a href="news.html">News</a><a href="register.html" class="register-btn">Register Now</a>
+  </div>
+  <div class="menu-icon" id="menuToggle"><i class="fas fa-bars"></i></div>
+</div>
+
+<div class="nav-overlay" id="navOverlay"></div>
+<div class="side-nav" id="sideNav">
+  <button class="close-nav" id="closeNavBtn"><i class="fas fa-times"></i></button>
+  <div class="side-logo"><h3>EGC <span>Global</span></h3><p>TRAINING CENTRE</p></div>
+  <ul>
+    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+    <li><a href="courses.html"><i class="fas fa-gem"></i> Courses</a></li>
+    <li><a href="about.html"><i class="fas fa-globe-africa"></i> About</a></li>
+    <li><a href="gallery.html"><i class="fas fa-images"></i> Gallery</a></li>
+    <li><a href="news.html"><i class="fas fa-newspaper"></i> News</a></li>
+    <li><a href="register.html"><i class="fas fa-user-plus"></i> Register</a></li>
+  </ul>
+  <div class="side-footer">© 2025 EGC Global</div>
+</div>
+
+<!-- Lightbox -->
+<div id="lightbox" class="lightbox" onclick="closeLightbox()">
+  <span class="close-lightbox">&times;</span>
+  <img id="lightboxImg" class="lightbox-img" src="" alt="">
+</div>
+
+<section style="padding: 3rem 0;">
+  <div class="container">
+    <h1 class="section-title">Gemstone Gallery</h1>
+    <p style="margin-bottom: 2rem;">Explore the beauty of Ethiopian gemstones - from rough crystals to polished masterpieces.</p>
+    
+    <div class="grid-3" id="galleryGrid"></div>
+  </div>
+</section>
+
+<footer><p>© 2025 EGC Global Trading PLC – All Rights Reserved.</p></footer>
+
+<script src="js/main.js"></script>
+<script>
+  // Gallery data with placeholder images (using Unsplash/placekitten alternatives and Font Awesome icons for visual)
+  const galleryItems = [
+    { id: 1, title: "Ethiopian Opal", category: "Opals", description: "Premium Welo opal with vibrant play-of-color", color: "#d4af5a", icon: "fas fa-gem", bgGradient: "linear-gradient(135deg, #1a1a2e, #16213e)" },
+    { id: 2, title: "Rough Emerald", category: "Emeralds", description: "Raw green emerald crystals from Seba Boru", color: "#2ecc71", icon: "fas fa-gem", bgGradient: "linear-gradient(135deg, #0f2027, #203a43)" },
+    { id: 3, title: "Blue Sapphire", category: "Sapphires", description: "Cornflower blue sapphire, 5.2 carats", color: "#3498db", icon: "fas fa-gem", bgGradient: "linear-gradient(135deg, #1e3c72, #2a5298)" },
+    { id: 4, title: "Lapidary Workshop", category: "Facilities", description: "State-of-the-art cutting and polishing equipment", color: "#e67e22", icon: "fas fa-tools", bgGradient: "linear-gradient(135deg, #3a1c0e, #5a2e17)" },
+    { id: 5, title: "Gem Lab", category: "Training", description: "Professional gemstone identification laboratory", color: "#9b59b6", icon: "fas fa-microscope", bgGradient: "linear-gradient(135deg, #2c0b3e, #4a1d6e)" },
+    { id: 6, title: "Student Practice", category: "Training", description: "Hands-on learning with rough gemstones", color: "#1abc9c", icon: "fas fa-graduation-cap", bgGradient: "linear-gradient(135deg, #0f4c3f, #1e6b58)" }
+  ];
+  
+  const galleryGrid = document.getElementById('galleryGrid');
+  
+  function openLightbox(imgSrc) {
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    lightboxImg.src = imgSrc;
+    lightbox.classList.add('active');
+  }
+  
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+  }
+  
+  // Generate gallery items with visual placeholder (stylized gem cards with icons)
+  galleryGrid.innerHTML = galleryItems.map(item => `
+    <div class="gallery-item" onclick="openLightbox('${item.icon === 'fas fa-gem' ? `https://placehold.co/600x400/2c3e50/d4af5a?text=${encodeURIComponent(item.title)}+Gemstone` : `https://placehold.co/600x400/1a1a2e/d4af5a?text=${encodeURIComponent(item.title)}`}')">
+      <div class="gallery-img" style="background: ${item.bgGradient}; display: flex; align-items: center; justify-content: center; flex-direction: column;">
+        <i class="${item.icon}" style="font-size: 4rem; color: ${item.color}; margin-bottom: 1rem;"></i>
+        <p style="color: white; text-align: center; padding: 0 1rem;">${item.title}</p>
+      </div>
+      <div class="gallery-overlay">
+        <h4>${item.title}</h4>
+        <p style="font-size: 0.8rem;">${item.description}</p>
+        <small style="color: ${item.color};">${item.category}</small>
+      </div>
+    </div>
+  `).join('');
+  
+  // Add real placeholder images after load for better visual
+  setTimeout(() => {
+    const placeholders = [
+      "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&h=250&fit=crop",
+      "https://images.unsplash.com/photo-1614728263952-84ea256f9679?w=400&h=250&fit=crop",
+      "https://images.unsplash.com/photo-1507560461416-5fa9b1bbd56b?w=400&h=250&fit=crop",
+      "https://images.unsplash.com/photo-1551615593-ef5fe247e8f7?w=400&h=250&fit=crop",
+      "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=400&h=250&fit=crop",
+      "https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=400&h=250&fit=crop"
+    ];
+    document.querySelectorAll('.gallery-img').forEach((img, index) => {
+      if (placeholders[index]) {
+        img.style.backgroundImage = `url(${placeholders[index]})`;
+        img.style.backgroundSize = 'cover';
+        img.innerHTML = '';
+      }
+    });
+  }, 100);
+</script>
+</body>
+</html>
