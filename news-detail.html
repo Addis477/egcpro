@@ -2,17 +2,117 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>EGC Global | News Detail</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>News & Event Detail | EGC Global Training Centre</title>
   <link rel="stylesheet" href="css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    .news-header-image {
+      width: 100%;
+      height: 420px;
+      background-size: cover;
+      background-position: center;
+      border-radius: 24px;
+      margin-bottom: 2rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .event-detail-box {
+      background: rgba(212, 175, 90, 0.12);
+      border-left: 4px solid var(--gold);
+      padding: 1.5rem;
+      border-radius: 16px;
+      margin: 1.5rem 0;
+    }
+    .event-icon {
+      font-size: 2rem;
+      color: var(--gold);
+      margin-right: 1rem;
+    }
+    .event-info-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .event-label {
+      font-weight: 700;
+      min-width: 100px;
+      color: var(--gold);
+    }
+    .badge-event {
+      display: inline-block;
+      background: var(--gold);
+      color: #000;
+      padding: 0.3rem 1rem;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+    .share-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(212,175,90,0.2);
+    }
+    .share-btn {
+      background: rgba(255,255,255,0.1);
+      padding: 0.5rem 1rem;
+      border-radius: 30px;
+      text-decoration: none;
+      color: var(--ivory);
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+    .share-btn:hover {
+      background: var(--gold);
+      color: #000;
+    }
+    .related-events {
+      margin-top: 3rem;
+    }
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .related-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .related-card:hover {
+      transform: translateY(-5px);
+    }
+    .related-img {
+      height: 140px;
+      background-size: cover;
+    }
+    .related-content {
+      padding: 1rem;
+    }
+    .related-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+    @media (max-width: 768px) {
+      .news-header-image { height: 220px; }
+    }
+  </style>
 </head>
 <body>
 
 <div class="top-bar">
   <div class="logo"><h1>EGC <span style="color:var(--gold);">Global</span></h1><p>TRAINING CENTRE</p></div>
   <div class="desktop-nav">
-    <a href="index.html">Home</a><a href="courses.html">Courses</a><a href="news.html">News</a><a href="register.html" class="register-btn">Register Now</a>
+    <a href="index.html">Home</a><a href="courses.html">Courses</a><a href="about.html">About</a>
+    <a href="gallery.html">Gallery</a><a href="news.html">News & Events</a><a href="register.html" class="register-btn">Register Now</a>
   </div>
   <div class="menu-icon" id="menuToggle"><i class="fas fa-bars"></i></div>
 </div>
@@ -21,42 +121,257 @@
 <div class="side-nav" id="sideNav">
   <button class="close-nav" id="closeNavBtn"><i class="fas fa-times"></i></button>
   <div class="side-logo"><h3>EGC <span>Global</span></h3><p>TRAINING CENTRE</p></div>
-  <ul><li><a href="index.html"><i class="fas fa-home"></i> Home</a></li><li><a href="news.html"><i class="fas fa-newspaper"></i> News</a></li></ul>
+  <ul>
+    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+    <li><a href="courses.html"><i class="fas fa-gem"></i> Courses</a></li>
+    <li><a href="about.html"><i class="fas fa-globe-africa"></i> About</a></li>
+    <li><a href="gallery.html"><i class="fas fa-images"></i> Gallery</a></li>
+    <li><a href="news.html"><i class="fas fa-newspaper"></i> News & Events</a></li>
+    <li><a href="register.html"><i class="fas fa-user-plus"></i> Register</a></li>
+  </ul>
   <div class="side-footer">© 2025 EGC Global</div>
 </div>
 
-<section style="padding: 3rem 0;">
+<section style="padding: 2rem 0 4rem 0;">
   <div class="container">
-    <div id="newsDetail"></div>
-    <a href="news.html" class="btn-outline" style="margin-top: 2rem; display: inline-block;"><i class="fas fa-arrow-left"></i> Back to News</a>
+    <div id="newsDetailContainer"></div>
+    <div style="margin-top: 2rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+      <a href="news.html" class="btn-outline"><i class="fas fa-arrow-left"></i> Back to News & Events</a>
+      <a href="register.html" class="btn-gold"><i class="fas fa-calendar-check"></i> Register for Event</a>
+    </div>
   </div>
 </section>
 
-<footer><p>© 2025 EGC Global Trading PLC</p></footer>
+<footer><p>© 2025 EGC Global Trading PLC – All Rights Reserved.</p></footer>
 
 <script src="js/main.js"></script>
 <script>
+  // Default events data with images
+  const defaultEventsData = [
+    {
+      id: 1001,
+      title: "🎉 GRAND OPENING - EGC Global Training Centre",
+      excerpt: "Join us for the official inauguration of Ethiopia's premier gemstone training facility.",
+      content: `<p>We are thrilled to announce the grand opening of EGC Global Training Centre! Located in front of the British Embassy, our state-of-the-art facility is ready to welcome students.</p>
+      <p>The event will feature:</p>
+      <ul>
+        <li>Live gemstone identification demonstrations by foreign geologists</li>
+        <li>Lapidary workshop tours</li>
+        <li>Networking session with industry experts</li>
+        <li>Special discounts for early registrations (up to 25% off)</li>
+        <li>Free refreshments and certificate of attendance</li>
+      </ul>
+      <p>Don't miss this opportunity to launch your career in the gemstone export business!</p>`,
+      date: "2025-06-28T10:00:00.000Z",
+      type: "event",
+      image: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=1200&h=500&fit=crop",
+      eventDate: "June 28, 2025",
+      eventTime: "10:00 AM - 4:00 PM",
+      eventLocation: "Infront of British Embassy, Birhanu Tefera Building, 2nd Floor, Addis Ababa",
+      eventPrice: "Free Entry"
+    },
+    {
+      id: 1002,
+      title: "🌟 International Gemology Workshop",
+      excerpt: "3-day intensive workshop with foreign geologists from USA, Germany, and India.",
+      content: `<p>Join our international faculty for an immersive workshop on advanced gemstone identification techniques.</p>
+      <p><strong>Workshop Highlights:</strong></p>
+      <ul>
+        <li>Hands-on training with professional gemological equipment</li>
+        <li>Real gemstone samples from Ethiopia and around the world</li>
+        <li>Certificate of completion from EGC Global</li>
+        <li>Networking dinner with industry professionals</li>
+      </ul>`,
+      date: "2025-07-10T09:00:00.000Z",
+      type: "event",
+      image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&h=500&fit=crop",
+      eventDate: "July 10-12, 2025",
+      eventTime: "9:00 AM - 5:00 PM",
+      eventLocation: "EGC Global Training Centre, Addis Ababa",
+      eventPrice: "5,000 ETB (Early bird: 3,500 ETB)"
+    },
+    {
+      id: 1003,
+      title: "📅 Free Gemstone Identification Workshop",
+      excerpt: "Experience our facilities during free orientation week.",
+      content: `<p>Prospective students are invited to attend our free orientation week. Get hands-on experience with gem identification tools and tour the lapidary workshop.</p>
+      <p><strong>What you'll learn:</strong></p>
+      <ul>
+        <li>Basic gemstone identification techniques</li>
+        <li>Understanding Ethiopian opal varieties</li>
+        <li>Career opportunities in gemstone export</li>
+        <li>Course overview and enrollment process</li>
+      </ul>`,
+      date: "2025-07-01T00:00:00.000Z",
+      type: "event",
+      image: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=1200&h=500&fit=crop",
+      eventDate: "July 1-5, 2025",
+      eventTime: "9:00 AM - 5:00 PM",
+      eventLocation: "EGC Global Training Centre",
+      eventPrice: "FREE"
+    }
+  ];
+
+  // Function to get all news (localStorage + defaults)
+  function getAllNews() {
+    const storedNews = JSON.parse(localStorage.getItem('egc_news') || '[]');
+    // Merge, avoid duplicates by id
+    const allNews = [...defaultEventsData];
+    storedNews.forEach(item => {
+      if (!allNews.some(ex => ex.id === item.id)) {
+        allNews.push(item);
+      }
+    });
+    return allNews;
+  }
+
+  // Load and display news/event detail
   function loadNewsDetail() {
     const urlParams = new URLSearchParams(window.location.search);
     const newsId = parseInt(urlParams.get('id'));
-    const news = JSON.parse(localStorage.getItem('egc_news') || '[]');
-    const article = news.find(n => n.id === newsId);
+    const allNews = getAllNews();
+    const article = allNews.find(n => n.id === newsId);
     
-    const container = document.getElementById('newsDetail');
+    const container = document.getElementById('newsDetailContainer');
+    
     if (!article) {
-      container.innerHTML = '<div class="alert alert-error">News article not found.</div>';
+      container.innerHTML = `
+        <div class="card" style="text-align: center; padding: 3rem;">
+          <i class="fas fa-exclamation-triangle" style="font-size: 4rem; color: var(--warning);"></i>
+          <h2>News/Event Not Found</h2>
+          <p>The article you're looking for doesn't exist or has been removed.</p>
+          <a href="news.html" class="btn-gold" style="margin-top: 1rem; display: inline-block;">Browse All Events</a>
+        </div>
+      `;
       return;
     }
     
+    const isEvent = article.type === 'event';
+    const formattedDate = new Date(article.date).toLocaleDateString('en-US', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+    
+    // Build event details HTML if it's an event
+    const eventDetailsHTML = isEvent ? `
+      <div class="event-detail-box">
+        <div class="event-info-row">
+          <i class="fas fa-calendar-alt event-icon"></i>
+          <div>
+            <span class="event-label">Date & Time:</span>
+            <strong>${article.eventDate || formattedDate}</strong> ${article.eventTime ? `<br><span style="font-size: 0.85rem;">⏰ ${article.eventTime}</span>` : ''}
+          </div>
+        </div>
+        <div class="event-info-row">
+          <i class="fas fa-map-marker-alt event-icon"></i>
+          <div>
+            <span class="event-label">Location:</span>
+            <strong>${article.eventLocation || 'Infront of British Embassy, Birhanu Tefera Building, 2nd Floor, Addis Ababa'}</strong>
+          </div>
+        </div>
+        <div class="event-info-row">
+          <i class="fas fa-ticket-alt event-icon"></i>
+          <div>
+            <span class="event-label">Price:</span>
+            <strong style="color: var(--gold);">${article.eventPrice || 'Contact us for pricing'}</strong>
+          </div>
+        </div>
+        <div style="margin-top: 1rem;">
+          <a href="register.html" class="btn-gold" style="display: inline-flex; align-items: center; gap: 8px;">
+            <i class="fas fa-user-plus"></i> Register for this Event
+          </a>
+        </div>
+      </div>
+    ` : '';
+    
     container.innerHTML = `
-      <div class="card">
-        <div class="news-date"><i class="far fa-calendar-alt"></i> ${new Date(article.date).toLocaleDateString()} | <i class="far fa-clock"></i> EGC Global</div>
-        <h1 style="font-size: 2.5rem; margin: 1rem 0;">${article.title}</h1>
-        <div style="height: 2px; background: linear-gradient(90deg, var(--gold), transparent); margin: 1rem 0 1.5rem 0;"></div>
-        <p style="font-size: 1.1rem; line-height: 1.6;">${article.content}</p>
+      <div class="badge-event">
+        <i class="${isEvent ? 'fas fa-calendar-check' : 'fas fa-newspaper'}"></i> 
+        ${isEvent ? 'UPCOMING EVENT' : 'ANNOUNCEMENT'}
+      </div>
+      
+      <div class="news-header-image" style="background-image: url('${article.image || 'https://placehold.co/1200x500/2c3e50/d4af5a?text=' + encodeURIComponent(article.title)}');">
+      </div>
+      
+      <h1 style="font-size: clamp(1.8rem, 5vw, 2.8rem); margin: 1rem 0 0.5rem;">${article.title}</h1>
+      
+      <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; color: #aaa; font-size: 0.85rem;">
+        <span><i class="far fa-calendar-alt"></i> Published: ${formattedDate}</span>
+        ${isEvent ? `<span><i class="fas fa-clock"></i> Event: ${article.eventDate || formattedDate}</span>` : ''}
+        <span><i class="fas fa-tag"></i> ${isEvent ? 'Event' : 'News'}</span>
+      </div>
+      
+      <div style="height: 2px; background: linear-gradient(90deg, var(--gold), transparent); margin: 1rem 0 2rem 0;"></div>
+      
+      ${eventDetailsHTML}
+      
+      <div class="news-content-body" style="font-size: 1.05rem; line-height: 1.7; color: #ddd;">
+        ${article.content}
+      </div>
+      
+      <div class="share-buttons">
+        <span style="margin-right: 0.5rem;">Share this ${isEvent ? 'event' : 'article'}:</span>
+        <a href="#" class="share-btn" onclick="shareOnFacebook()"><i class="fab fa-facebook-f"></i> Facebook</a>
+        <a href="#" class="share-btn" onclick="shareOnTwitter()"><i class="fab fa-twitter"></i> Twitter</a>
+        <a href="#" class="share-btn" onclick="shareOnWhatsApp()"><i class="fab fa-whatsapp"></i> WhatsApp</a>
       </div>
     `;
+    
+    // Load related events (other events)
+    loadRelatedEvents(article.id);
   }
+  
+  function loadRelatedEvents(currentId) {
+    const allNews = getAllNews();
+    const related = allNews.filter(item => item.type === 'event' && item.id !== currentId).slice(0, 3);
+    
+    if (related.length === 0) return;
+    
+    const relatedHTML = `
+      <div class="related-events">
+        <h3><i class="fas fa-calendar-week"></i> Upcoming Events You Might Like</h3>
+        <div class="related-grid">
+          ${related.map(event => `
+            <div class="related-card" onclick="window.location.href='news-detail.html?id=${event.id}'">
+              <div class="related-img" style="background-image: url('${event.image || 'https://placehold.co/400x200/2c3e50/d4af5a?text=' + encodeURIComponent(event.title)}'); background-size: cover;"></div>
+              <div class="related-content">
+                <div style="color: var(--gold); font-size: 0.7rem;"><i class="fas fa-calendar-alt"></i> ${event.eventDate || new Date(event.date).toLocaleDateString()}</div>
+                <div class="related-title">${event.title.length > 50 ? event.title.substring(0, 50) + '...' : event.title}</div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+    
+    document.getElementById('newsDetailContainer').insertAdjacentHTML('beforeend', relatedHTML);
+  }
+  
+  // Share functions
+  function shareOnFacebook() {
+    const url = encodeURIComponent(window.location.href);
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank', 'width=600,height=400');
+  }
+  
+  function shareOnTwitter() {
+    const url = encodeURIComponent(window.location.href);
+    const text = encodeURIComponent(document.querySelector('h1')?.innerText || 'Check out this event at EGC Global');
+    window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank', 'width=600,height=400');
+  }
+  
+  function shareOnWhatsApp() {
+    const url = window.location.href;
+    window.open(`https://wa.me/?text=${encodeURIComponent('Check out this event at EGC Global: ' + url)}`, '_blank');
+  }
+  
+  // Make share functions global
+  window.shareOnFacebook = shareOnFacebook;
+  window.shareOnTwitter = shareOnTwitter;
+  window.shareOnWhatsApp = shareOnWhatsApp;
+  
+  // Initialize
   loadNewsDetail();
 </script>
 </body>
