@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>News & Events | EGC Global Training Centre</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700;800&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <!-- AOS Animation Library -->
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -63,7 +63,6 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      position: relative;
       filter: drop-shadow(0 0 8px var(--gold));
       animation: gemPulse 2s infinite;
     }
@@ -78,31 +77,11 @@
       background: linear-gradient(135deg, rgba(26, 32, 38, 0.9), rgba(18, 22, 28, 0.95));
       backdrop-filter: blur(12px);
       border-radius: 28px;
+      padding: 2rem;
       border: 1px solid rgba(212, 175, 90, 0.2);
       transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
       position: relative;
       overflow: hidden;
-    }
-    
-    .premium-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(212, 175, 90, 0.1), transparent);
-      transition: left 0.6s ease;
-    }
-    
-    .premium-card:hover::before {
-      left: 100%;
-    }
-    
-    .premium-card:hover {
-      transform: translateY(-12px);
-      border-color: var(--gold);
-      box-shadow: 0 25px 45px -12px rgba(212, 175, 90, 0.3), 0 0 20px rgba(212, 175, 90, 0.2);
     }
     
     /* Navigation */
@@ -162,15 +141,24 @@
     
     /* Section Title */
     .section-title {
-      font-size: 2.5rem; font-weight: 700; position: relative;
-      display: inline-block; margin-bottom: 2rem;
+      font-size: 2.5rem;
+      font-weight: 700;
+      position: relative;
+      display: inline-block;
+      margin-bottom: 2rem;
+      font-family: 'Cormorant Garamond', serif;
     }
     .section-title:after {
-      content: ''; position: absolute; bottom: -10px; left: 0;
-      width: 60px; height: 3px; background: linear-gradient(90deg, var(--gold), transparent);
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), transparent);
     }
     
-    /* Grid Layout - More Cards */
+    /* News Grid */
     .news-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
@@ -321,29 +309,6 @@
       background: rgba(212, 175, 90, 0.15);
     }
     
-    /* Buttons */
-    .btn-outline {
-      background: transparent;
-      border: 1.5px solid var(--gold);
-      color: var(--gold);
-      padding: 0.8rem 1.8rem;
-      border-radius: 40px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-    }
-    
-    .btn-outline:hover {
-      background: var(--gold);
-      color: #000;
-      transform: translateY(-3px);
-      box-shadow: 0 10px 25px -8px rgba(212, 175, 90, 0.3);
-    }
-    
     /* Load More Button */
     .load-more-container {
       text-align: center;
@@ -386,18 +351,22 @@
 
 <!-- Animated Background -->
 <div class="animated-bg"></div>
-<div class="floating-gem" style="top: 10%; left: 5%; animation-duration: 25s;">
-  <i class="fas fa-gem" style="font-size: 60px; color: var(--gold); opacity: 0.1;"></i>
+<div class="floating-gem" style="top: 10%; left: 3%; animation-duration: 25s;">
+  <i class="fas fa-gem" style="font-size: 70px; color: var(--gold); opacity: 0.1;"></i>
 </div>
-<div class="floating-gem" style="bottom: 15%; right: 8%; animation-duration: 18s;">
-  <i class="fas fa-gem" style="font-size: 80px; color: var(--gold); opacity: 0.08;"></i>
+<div class="floating-gem" style="bottom: 20%; right: 5%; animation-duration: 18s;">
+  <i class="fas fa-diamond" style="font-size: 90px; color: var(--gold); opacity: 0.08;"></i>
 </div>
 
 <div class="top-bar">
   <div class="logo"><h1>EGC <span style="color:var(--gold);">Global</span></h1><p>TRAINING CENTRE</p></div>
   <div class="desktop-nav">
-    <a href="index.html">Home</a><a href="courses.html">Courses</a><a href="about.html">About</a>
-    <a href="gallery.html">Gallery</a><a href="news.html" class="active">News</a><a href="register.html" class="register-btn">Register Now</a>
+    <a href="index.html">Home</a>
+    <a href="courses.html">Courses</a>
+    <a href="about.html">About</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="news.html" class="active">News</a>
+    <a href="register.html" class="register-btn">Register Now</a>
   </div>
   <div class="menu-icon" id="menuToggle"><i class="fas fa-bars"></i></div>
 </div>
@@ -415,7 +384,7 @@
     <li><a href="register.html"><i class="fas fa-user-plus"></i> Register</a></li>
     <li><a href="admin-login.html"><i class="fas fa-lock"></i> Admin</a></li>
   </ul>
-  <div class="side-footer">© 2025 EGC Global</div>
+  <div class="side-footer"><i class="fas fa-certificate"></i> Ethiopian Gemstones<br>© 2025 EGC Global</div>
 </div>
 
 <section>
@@ -442,7 +411,9 @@
 
 <footer>
   <p>© 2025 EGC Global Trading PLC – All Rights Reserved.</p>
-  <p style="margin-top: 0.5rem; font-size: 0.8rem;"><i class="fas fa-certificate"></i> Certified Gemstone Identification & Lapidary Training</p>
+  <p style="margin-top: 0.5rem; font-size: 0.8rem;">
+    <i class="fas fa-certificate"></i> Certified Gemstone Identification & Lapidary Training
+  </p>
 </footer>
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -461,19 +432,45 @@
   if (navOverlay) navOverlay.addEventListener('click', closeNav);
   document.querySelectorAll('.side-nav a').forEach(link => link.addEventListener('click', closeNav));
 
-  // EXPANDED PLACEHOLDER DATA - MORE CARDS
+  // Gallery Images for News (using your actual images)
+  const galleryImages = [
+    "https://raw.githubusercontent.com/Addis477/egcpro/main/il_fullxfull.5975959857_aqa7.jpg",
+    "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(3).jpeg",
+    "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(5).jpeg",
+    "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(6).jpeg",
+    "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(8).jpeg",
+    "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(9).jpeg",
+    "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(10).jpeg",
+    "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(11).jpeg",
+    "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(12).jpeg",
+    "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(13).jpeg",
+    "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(14).jpeg",
+    "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(15).jpeg",
+    "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(16).jpeg",
+    "https://raw.githubusercontent.com/Addis477/egcpro/main/Gem-Polishing-tourmaline-S_480x480.jpg",
+    "https://raw.githubusercontent.com/Addis477/egcpro/main/5e604447ac5fd.jpg",
+    "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(17).jpeg",
+    "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(18).jpeg",
+    "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(19).jpeg"
+  ];
+
+  // EXPANDED PLACEHOLDER DATA WITH GALLERY IMAGES
   (function initPlaceholderData() {
     let existingNews = localStorage.getItem('egc_news');
     if (!existingNews || JSON.parse(existingNews).length === 0) {
       const placeholderNews = [
-        { id: 1001, title: "🎉 GRAND OPENING - EGC Global Training Centre", type: "event", image: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=800&h=400&fit=crop", excerpt: "Join us for the official inauguration of Ethiopia's premier gemstone training facility on June 28, 2025.", content: "<p>We are thrilled to announce the grand opening of EGC Global Training Centre! Located in front of the British Embassy, our state-of-the-art facility is ready to welcome students.</p><p>The event will feature live gemstone identification demonstrations, lapidary workshop tours, networking sessions, and special discounts for early registrations.</p>", date: "2025-06-28T10:00:00.000Z", eventDate: "June 28, 2025", eventTime: "10:00 AM - 4:00 PM", eventLocation: "Infront of British Embassy, Addis Ababa" },
-        { id: 1002, title: "🌟 Foreign Geologists Arrive in Addis Ababa", type: "announcement", image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=400&fit=crop", excerpt: "International gemology experts from USA, Germany, and India have arrived to lead our training programs.", content: "<p>We warmly welcome our international faculty members who bring decades of experience in gemstone identification and lapidary arts.</p>", date: "2025-06-20T00:00:00.000Z" },
-        { id: 1003, title: "📅 Free Orientation Week - July 1-5, 2025", type: "event", image: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=800&h=400&fit=crop", excerpt: "Experience our facilities and meet instructors during our free orientation week.", content: "<p>Prospective students are invited to attend our free orientation week. Get hands-on experience with gem identification tools, tour the lapidary workshop, and learn about career opportunities.</p>", date: "2025-06-15T00:00:00.000Z", eventDate: "July 1-5, 2025", eventTime: "9:00 AM - 5:00 PM", eventLocation: "EGC Global Training Centre" },
-        { id: 1004, title: "💎 Ethiopian Opals: Global Demand Rising 40%", type: "announcement", image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&h=400&fit=crop", excerpt: "Market report shows significant increase in demand for Ethiopian precious opals from European and Asian markets.", content: "<p>The global gemstone market is seeing unprecedented interest in Ethiopian opals. Our training program prepares students to meet this demand.</p>", date: "2025-06-10T00:00:00.000Z" },
-        { id: 1005, title: "🔧 Lapidary Workshop Equipment Arrives", type: "announcement", image: "https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=800&h=400&fit=crop", excerpt: "State-of-the-art faceting and polishing machines from Germany and Italy have been installed.", content: "<p>Our workshop is now equipped with professional-grade lapidary equipment from Germany and Italy.</p>", date: "2025-06-05T00:00:00.000Z" },
-        { id: 1006, title: "💰 Early Bird Registration Discount - Save 25%", type: "announcement", image: "https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=800&h=400&fit=crop", excerpt: "Register before July 15th and get 25% off on all courses plus free starter kit.", content: "<p>Take advantage of our early bird special! Register for any course before July 15, 2025, and receive 25% discount.</p>", date: "2025-06-01T00:00:00.000Z" },
-        { id: 1007, title: "🎓 Student Success Story: First Batch Graduates", type: "announcement", image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&h=400&fit=crop", excerpt: "Our first batch of gemology students successfully completed their certification with outstanding results.", content: "<p>Congratulations to our first graduating class! These students are now ready to enter the gemstone export business.</p>", date: "2025-05-25T00:00:00.000Z" },
-        { id: 1008, title: "🌍 International Gemstone Expo 2025", type: "event", image: "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=800&h=400&fit=crop", excerpt: "EGC Global will be exhibiting at the International Gemstone Expo in Dubai this November.", content: "<p>Visit our booth at the International Gemstone Expo to see Ethiopian gemstones and learn about our training programs.</p>", date: "2025-11-15T00:00:00.000Z", eventDate: "November 15-18, 2025", eventTime: "10:00 AM - 6:00 PM", eventLocation: "Dubai World Trade Centre" }
+        { id: 1001, title: "🎉 GRAND OPENING - EGC Global Training Centre", type: "event", image: galleryImages[0], excerpt: "Join us for the official inauguration of Ethiopia's premier gemstone training facility on June 28, 2025.", content: "<p>We are thrilled to announce the grand opening of EGC Global Training Centre! Located in front of the British Embassy, our state-of-the-art facility is ready to welcome students.</p><p>The event will feature live gemstone identification demonstrations, lapidary workshop tours, networking sessions, and special discounts for early registrations.</p>", date: "2025-06-28T10:00:00.000Z", eventDate: "June 28, 2025", eventTime: "10:00 AM - 4:00 PM", eventLocation: "Infront of British Embassy, Addis Ababa" },
+        { id: 1002, title: "🌟 Ethiopian Opals: Global Demand Rising", type: "announcement", image: galleryImages[1], excerpt: "International demand for Ethiopian Welo opals has increased by 40% in 2025.", content: "<p>The global gemstone market is seeing unprecedented interest in Ethiopian opals. Our training program prepares students to meet this demand with professional certification recognized worldwide.</p>", date: "2025-06-20T00:00:00.000Z" },
+        { id: 1003, title: "📅 Free Orientation Week - July 1-5, 2025", type: "event", image: galleryImages[2], excerpt: "Experience our facilities and meet instructors during our free orientation week.", content: "<p>Prospective students are invited to attend our free orientation week. Get hands-on experience with gem identification tools, tour the lapidary workshop, and learn about career opportunities.</p>", date: "2025-06-15T00:00:00.000Z", eventDate: "July 1-5, 2025", eventTime: "9:00 AM - 5:00 PM", eventLocation: "EGC Global Training Centre" },
+        { id: 1004, title: "💎 Premium Ethiopian Opal Showcase", type: "announcement", image: galleryImages[3], excerpt: "Discover the mesmerizing play-of-color in Ethiopian precious opals.", content: "<p>Ethiopian opals are renowned for their vibrant color flashes. Our expert instructors will teach you how to identify and grade these magnificent gemstones.</p>", date: "2025-06-10T00:00:00.000Z" },
+        { id: 1005, title: "🔧 Lapidary Workshop Equipment Arrives", type: "announcement", image: galleryImages[13], excerpt: "State-of-the-art faceting and polishing machines from Germany and Italy have been installed.", content: "<p>Our workshop is now equipped with professional-grade lapidary equipment from Germany and Italy. Students will learn cutting, cabbing, and polishing techniques used by master gem cutters worldwide.</p>", date: "2025-06-05T00:00:00.000Z" },
+        { id: 1006, title: "💰 Early Bird Registration Discount - Save 25%", type: "announcement", image: galleryImages[4], excerpt: "Register before July 15th and get 25% off on all courses plus free starter kit.", content: "<p>Take advantage of our early bird special! Register for any course before July 15, 2025, and receive 25% discount plus a free gemstone identification starter kit.</p>", date: "2025-06-01T00:00:00.000Z" },
+        { id: 1007, title: "🎓 Student Success Story: First Batch Graduates", type: "announcement", image: galleryImages[5], excerpt: "Our first batch of gemology students successfully completed their certification.", content: "<p>Congratulations to our first graduating class! These students are now ready to enter the gemstone export business with professional certification.</p>", date: "2025-05-25T00:00:00.000Z" },
+        { id: 1008, title: "🌍 International Gemstone Expo 2025", type: "event", image: galleryImages[6], excerpt: "EGC Global will be exhibiting at the International Gemstone Expo in Dubai this November.", content: "<p>Visit our booth at the International Gemstone Expo to see Ethiopian gemstones and learn about our training programs.</p>", date: "2025-11-15T00:00:00.000Z", eventDate: "November 15-18, 2025", eventTime: "10:00 AM - 6:00 PM", eventLocation: "Dubai World Trade Centre" },
+        { id: 1009, title: "💚 Ethiopian Emeralds Discovery", type: "announcement", image: galleryImages[7], excerpt: "New emerald deposits discovered in the Seba Boru region.", content: "<p>Ethiopia's emerald production is expanding with new discoveries. Learn to identify and grade these beautiful green gemstones in our certification course.</p>", date: "2025-05-20T00:00:00.000Z" },
+        { id: 1010, title: "🔵 Blue Sapphires from Tigray", type: "announcement", image: galleryImages[10], excerpt: "High-quality blue sapphires are being mined in northern Ethiopia.", content: "<p>Tigray region is producing beautiful blue sapphires. Our experts will teach you the characteristics of Ethiopian sapphires and how to evaluate them.</p>", date: "2025-05-15T00:00:00.000Z" },
+        { id: 1011, title: "✂️ Precision Faceting Workshop", type: "event", image: galleryImages[14], excerpt: "Learn advanced faceting techniques from master lapidary artists.", content: "<p>Join our intensive faceting workshop where you'll learn to transform rough gemstones into brilliant finished gems.</p>", date: "2025-08-10T00:00:00.000Z", eventDate: "August 10-14, 2025", eventTime: "9:00 AM - 4:00 PM", eventLocation: "EGC Lapidary Workshop" },
+        { id: 1012, title: "🏆 Ethiopian Gemstone Competition", type: "event", image: galleryImages[16], excerpt: "Submit your finest Ethiopian gemstones for a chance to win prizes.", content: "<p>We're hosting Ethiopia's first gemstone competition! Open to all miners, collectors, and students.</p>", date: "2025-09-01T00:00:00.000Z", eventDate: "September 30, 2025", eventTime: "2:00 PM - 6:00 PM", eventLocation: "EGC Global Training Centre" }
       ];
       localStorage.setItem('egc_news', JSON.stringify(placeholderNews));
     }
@@ -508,7 +505,7 @@
     
     container.innerHTML = visibleItems.map(item => `
       <div class="news-card" onclick="location.href='news-detail.html?id=${item.id}'" data-aos="fade-up" data-aos-delay="100">
-        <div class="news-image" style="background-image: url('${item.image || 'https://placehold.co/800x400/2c3e50/d4af5a?text=' + encodeURIComponent(item.title)}');">
+        <div class="news-image" style="background-image: url('${item.image || galleryImages[Math.floor(Math.random() * galleryImages.length)]}');">
           ${item.type === 'event' ? '<div class="event-badge"><i class="fas fa-calendar-alt"></i> EVENT</div>' : ''}
         </div>
         <div class="news-content">
@@ -523,7 +520,6 @@
       </div>
     `).join('');
     
-    // Show/hide load more button
     if (visibleCount >= filtered.length) {
       loadMoreBtn.style.display = 'none';
     } else {
@@ -536,7 +532,6 @@
     renderNews();
   }
 
-  // Tab switching
   function switchTab(filter, activeBtnId) {
     currentFilter = filter;
     visibleCount = 6;
@@ -550,7 +545,6 @@
   document.getElementById('tabNews').onclick = () => switchTab('announcement', 'tabNews');
   document.getElementById('loadMoreBtn').onclick = loadMore;
 
-  // Load data
   allItems = getAllNews();
   renderNews();
 </script>
