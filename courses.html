@@ -2,18 +2,472 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>EGC Global | Courses - Gemstone & Lapidary Training</title>
-  <link rel="stylesheet" href="css/style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Courses | EGC Global - Gemstone & Lapidary Training Programs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700;800&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- AOS Animation Library -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --gold: #d4af5a;
+      --gold-light: #e6c97e;
+      --gold-dark: #b8923e;
+      --dark-bg: #0a0c0f;
+      --card-bg: rgba(26, 32, 38, 0.85);
+      --ivory: #f2ede4;
+      --glow: rgba(212, 175, 90, 0.4);
+      --glow-strong: rgba(212, 175, 90, 0.7);
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--dark-bg);
+      color: var(--ivory);
+      overflow-x: hidden;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #121418; }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+
+    /* Animated Background */
+    .animated-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      background: radial-gradient(circle at 20% 30%, #0f1a1f, #050708);
+    }
+    
+    /* Floating Gemstones */
+    .floating-gem {
+      position: fixed;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.12;
+      animation: floatGem 20s infinite ease-in-out;
+    }
+    
+    @keyframes floatGem {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-30px) rotate(10deg); }
+    }
+    
+    /* Glowing Gem Icon */
+    .glowing-gem {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      filter: drop-shadow(0 0 8px var(--gold));
+      animation: gemPulse 2s infinite;
+    }
+    
+    @keyframes gemPulse {
+      0%, 100% { filter: drop-shadow(0 0 5px var(--gold)); transform: scale(1); }
+      50% { filter: drop-shadow(0 0 20px var(--gold)); transform: scale(1.05); }
+    }
+    
+    /* Premium Card Styles */
+    .premium-card {
+      background: linear-gradient(135deg, rgba(26, 32, 38, 0.9), rgba(18, 22, 28, 0.95));
+      backdrop-filter: blur(12px);
+      border-radius: 28px;
+      border: 1px solid rgba(212, 175, 90, 0.2);
+      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .premium-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(212, 175, 90, 0.08), transparent);
+      transition: left 0.6s ease;
+    }
+    
+    .premium-card:hover::before {
+      left: 100%;
+    }
+    
+    .premium-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--gold);
+      box-shadow: 0 25px 45px -12px rgba(212, 175, 90, 0.3), 0 0 20px rgba(212, 175, 90, 0.15);
+    }
+    
+    /* Navigation */
+    .top-bar {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem 2rem; background: rgba(10,12,15,0.85); backdrop-filter: blur(12px);
+      position: sticky; top: 0; z-index: 99; border-bottom: 1px solid rgba(212,175,90,0.25);
+      animation: slideDown 0.5s ease;
+    }
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .logo h1 { font-size: 1.6rem; background: linear-gradient(135deg, var(--gold-light), var(--gold)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .logo p { font-size: 0.65rem; letter-spacing: 2.5px; color: var(--gold); }
+    .desktop-nav { display: none; gap: 2rem; align-items: center; }
+    .desktop-nav a { color: var(--ivory); text-decoration: none; font-weight: 500; transition: all 0.3s; position: relative; }
+    .desktop-nav a::after {
+      content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px;
+      background: var(--gold); transition: width 0.3s;
+    }
+    .desktop-nav a:hover::after, .desktop-nav a.active::after { width: 100%; }
+    .desktop-nav a:hover { color: var(--gold); }
+    .register-btn { background: var(--gold); color: #000 !important; padding: 0.5rem 1.3rem; border-radius: 40px; font-weight: 700 !important; }
+    .register-btn::after { display: none; }
+    .menu-icon { font-size: 1.8rem; color: var(--gold); cursor: pointer; transition: transform 0.2s; }
+    .menu-icon:hover { transform: scale(1.1); }
+    @media (min-width: 992px) { .menu-icon { display: none; } .desktop-nav { display: flex; } }
+    
+    /* Side Navigation */
+    .nav-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(10, 12, 15, 0.95); backdrop-filter: blur(12px);
+      z-index: 1000; visibility: hidden; opacity: 0; transition: all 0.3s ease;
+    }
+    .nav-overlay.active { visibility: visible; opacity: 1; }
+    .side-nav {
+      position: fixed; top: 0; right: -100%; width: min(85%, 380px); height: 100%;
+      background: linear-gradient(165deg, #12181f 0%, #0a0e12 100%);
+      box-shadow: -8px 0 40px rgba(0,0,0,0.6); z-index: 1001;
+      transition: right 0.35s cubic-bezier(0.2,0.9,0.4,1.1);
+      padding: 2rem 1.8rem; display: flex; flex-direction: column;
+      border-left: 2px solid var(--gold);
+    }
+    .side-nav.open { right: 0; }
+    .close-nav { background: none; border: none; color: var(--gold); font-size: 2rem; cursor: pointer; align-self: flex-end; }
+    .side-nav ul { list-style: none; flex: 1; }
+    .side-nav li { margin: 1.5rem 0; }
+    .side-nav a { color: var(--ivory); text-decoration: none; font-size: 1.2rem; font-weight: 500; display: flex; align-items: center; gap: 14px; transition: 0.25s; }
+    .side-nav a i { width: 28px; color: var(--gold); }
+    .side-nav a:hover { color: var(--gold); transform: translateX(8px); }
+    .side-footer { margin-top: auto; padding-top: 1.5rem; font-size: 0.75rem; color: #8d9a9e; border-top: 1px solid rgba(212,175,90,0.2); text-align: center; }
+    
+    /* Container */
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
+    section { padding: 4rem 0; }
+    
+    /* Hero Section */
+    .courses-hero {
+      min-height: 55vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      padding: 3rem 0;
+    }
+    .courses-hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 8vw, 5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      background: linear-gradient(135deg, #fff, var(--gold-light));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(212, 175, 90, 0.12);
+      border-left: 4px solid var(--gold);
+      padding: 0.5rem 1.2rem;
+      border-radius: 0 30px 30px 0;
+      margin-bottom: 1.5rem;
+    }
+    
+    /* Section Title */
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      position: relative;
+      display: inline-block;
+      margin-bottom: 2rem;
+      font-family: 'Cormorant Garamond', serif;
+    }
+    .section-title:after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+    }
+    
+    /* Course Card */
+    .course-card {
+      background: linear-gradient(135deg, rgba(26, 32, 38, 0.9), rgba(18, 22, 28, 0.95));
+      backdrop-filter: blur(12px);
+      border-radius: 28px;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      border: 1px solid rgba(212, 175, 90, 0.2);
+      position: relative;
+    }
+    
+    .course-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(212, 175, 90, 0.08), transparent);
+      transition: left 0.6s ease;
+    }
+    
+    .course-card:hover::before {
+      left: 100%;
+    }
+    
+    .course-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--gold);
+      box-shadow: 0 25px 45px -12px rgba(212, 175, 90, 0.3);
+    }
+    
+    .course-image {
+      width: 100%;
+      height: 220px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      transition: transform 0.5s;
+    }
+    
+    .course-card:hover .course-image {
+      transform: scale(1.03);
+    }
+    
+    .course-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: #000;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: bold;
+    }
+    
+    .course-content {
+      padding: 1.8rem;
+    }
+    
+    .course-icon {
+      font-size: 2.5rem;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      filter: drop-shadow(0 0 5px var(--gold));
+    }
+    
+    .course-title {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      font-family: 'Cormorant Garamond', serif;
+    }
+    
+    .course-meta {
+      display: flex;
+      gap: 1rem;
+      margin: 1rem 0;
+      flex-wrap: wrap;
+    }
+    
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      background: rgba(212, 175, 90, 0.1);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+    }
+    
+    .course-price {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--gold);
+      margin: 1rem 0;
+    }
+    
+    .course-features {
+      list-style: none;
+      margin: 1rem 0;
+    }
+    
+    .course-features li {
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+    }
+    
+    .course-features i {
+      color: var(--gold);
+      width: 20px;
+    }
+    
+    /* Grid Layouts */
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 2rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+    
+    /* Comparison Table */
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: linear-gradient(135deg, rgba(26, 32, 38, 0.9), rgba(18, 22, 28, 0.95));
+      border-radius: 24px;
+      overflow: hidden;
+    }
+    
+    .comparison-table th, .comparison-table td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid rgba(212, 175, 90, 0.15);
+    }
+    
+    .comparison-table th {
+      background: rgba(212, 175, 90, 0.15);
+      color: var(--gold);
+      font-weight: 600;
+    }
+    
+    .comparison-table tr:hover {
+      background: rgba(212, 175, 90, 0.05);
+    }
+    
+    .check-icon {
+      color: var(--success, #27ae60);
+    }
+    
+    /* FAQ Section */
+    .faq-item {
+      background: linear-gradient(135deg, rgba(26, 32, 38, 0.7), rgba(18, 22, 28, 0.8));
+      border-radius: 20px;
+      padding: 1.2rem;
+      margin-bottom: 1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: 1px solid rgba(212, 175, 90, 0.15);
+    }
+    
+    .faq-item:hover {
+      border-color: var(--gold);
+    }
+    
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+    }
+    
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      color: #b0b5b8;
+      font-size: 0.9rem;
+    }
+    
+    .faq-item.active .faq-answer {
+      max-height: 200px;
+      margin-top: 1rem;
+    }
+    
+    /* Buttons */
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: #000;
+      padding: 0.9rem 2rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .btn-gold:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px -8px rgba(212, 175, 90, 0.5);
+    }
+    
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid var(--gold);
+      color: var(--gold);
+      padding: 0.8rem 1.8rem;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .btn-outline:hover {
+      background: var(--gold);
+      color: #000;
+      transform: translateY(-3px);
+    }
+    
+    footer {
+      background: #05080c;
+      text-align: center;
+      padding: 2.5rem;
+      border-top: 1px solid rgba(212, 175, 90, 0.15);
+    }
+    
+    @media (max-width: 768px) {
+      .container { padding: 0 1.2rem; }
+      section { padding: 2.5rem 0; }
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .courses-hero { min-height: 40vh; }
+      .comparison-table { font-size: 0.8rem; }
+    }
+  </style>
 </head>
 <body>
+
+<!-- Animated Background -->
+<div class="animated-bg"></div>
+<div class="floating-gem" style="top: 10%; left: 3%; animation-duration: 25s;">
+  <i class="fas fa-gem" style="font-size: 70px; color: var(--gold); opacity: 0.1;"></i>
+</div>
+<div class="floating-gem" style="bottom: 20%; right: 5%; animation-duration: 18s;">
+  <i class="fas fa-diamond" style="font-size: 90px; color: var(--gold); opacity: 0.08;"></i>
+</div>
 
 <div class="top-bar">
   <div class="logo"><h1>EGC <span style="color:var(--gold);">Global</span></h1><p>TRAINING CENTRE</p></div>
   <div class="desktop-nav">
-    <a href="index.html">Home</a><a href="courses.html" class="active">Courses</a><a href="about.html">About</a>
-    <a href="gallery.html">Gallery</a><a href="news.html">News</a><a href="register.html" class="register-btn">Register Now</a>
+    <a href="index.html">Home</a>
+    <a href="courses.html" class="active">Courses</a>
+    <a href="about.html">About</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="news.html">News</a>
+    <a href="register.html" class="register-btn">Register Now</a>
   </div>
   <div class="menu-icon" id="menuToggle"><i class="fas fa-bars"></i></div>
 </div>
@@ -31,45 +485,280 @@
     <li><a href="register.html"><i class="fas fa-user-plus"></i> Register</a></li>
     <li><a href="admin-login.html"><i class="fas fa-lock"></i> Admin</a></li>
   </ul>
-  <div class="side-footer"><i class="fas fa-certificate"></i> Foreign Geologists<br>© 2025 EGC Global</div>
+  <div class="side-footer"><i class="fas fa-certificate"></i> Ethiopian Gemstones<br>© 2025 EGC Global</div>
 </div>
 
-<section style="padding: 4rem 0;">
+<!-- Hero Section -->
+<section class="courses-hero">
   <div class="container">
-    <h1 class="section-title" style="font-size: 3rem;">Our Courses</h1>
-    <p style="margin-bottom: 2rem;">Professional training programs designed to launch your gemstone career.</p>
-    
+    <div class="hero-badge" data-aos="fade-right">
+      <i class="fas fa-gem glowing-gem" style="font-size: 0.9rem;"></i> Professional Training
+    </div>
+    <h1 data-aos="fade-up" data-aos-delay="100">Master the Art of<br>Gemstone Identification</h1>
+    <p style="font-size: 1.1rem; max-width: 700px; margin-top: 1.5rem; color: #cfd5d4;" data-aos="fade-up" data-aos-delay="200">
+      World-class certification programs designed by international gemologists. Transform your passion into a profitable career in the global gemstone industry.
+    </p>
+  </div>
+</section>
+
+<!-- Main Courses Section -->
+<section>
+  <div class="container">
+    <h2 class="section-title" data-aos="fade-right">Our Certification Programs</h2>
     <div class="grid-2">
-      <div class="card">
-        <i class="fas fa-search" style="font-size: 2rem; color: var(--gold);"></i>
-        <h2>Gemstone Identification</h2>
-        <p><strong>Duration:</strong> 4 weeks (Intensive) / 8 weeks (Standard)</p>
-        <p>Master spectroscopic methods, refractive indexing, inclusion analysis. Learn to certify Ethiopian opals, emeralds, and sapphires.</p>
-        <p style="margin-top: 1rem;"><i class="fas fa-check-circle" style="color: var(--gold);"></i> 100+ rough & cut samples</p>
-        <p><i class="fas fa-certificate" style="color: var(--gold);"></i> International Certification</p>
-        <a href="register.html" class="btn-gold" style="margin-top: 1rem; display: inline-block;">Enroll Now →</a>
+      <!-- Course 1: Gemstone Identification -->
+      <div class="course-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="course-image" style="background-image: url('https://raw.githubusercontent.com/Addis477/egcpro/main/il_fullxfull.5975959857_aqa7.jpg');">
+          <div class="course-badge"><i class="fas fa-certificate"></i> Certified</div>
+        </div>
+        <div class="course-content">
+          <i class="fas fa-microscope course-icon glowing-gem"></i>
+          <h2 class="course-title">Gemstone Identification</h2>
+          <p style="color: #b0b5b8; margin-bottom: 1rem;">Master the science of gemology with hands-on training using professional equipment.</p>
+          
+          <div class="course-meta">
+            <span class="meta-item"><i class="fas fa-clock"></i> 4-8 Weeks</span>
+            <span class="meta-item"><i class="fas fa-users"></i> Max 15 Students</span>
+            <span class="meta-item"><i class="fas fa-globe"></i> International Certificate</span>
+          </div>
+          
+          <div class="course-price">$1,200<span style="font-size: 0.9rem;"> / Early Bird $900</span></div>
+          
+          <ul class="course-features">
+            <li><i class="fas fa-check-circle"></i> 100+ rough & cut gemstone samples</li>
+            <li><i class="fas fa-check-circle"></i> Refractometer & spectroscope training</li>
+            <li><i class="fas fa-check-circle"></i> Inclusion identification techniques</li>
+            <li><i class="fas fa-check-circle"></i> Ethiopian opal specialization</li>
+            <li><i class="fas fa-check-circle"></i> International certification exam</li>
+          </ul>
+          
+          <a href="register.html" class="btn-gold" style="width: 100%; justify-content: center;">Enroll Now →</a>
+        </div>
       </div>
       
-      <div class="card">
-        <i class="fas fa-gripfire" style="font-size: 2rem; color: var(--gold);"></i>
-        <h2>Lapidary Introduction</h2>
-        <p><strong>Duration:</strong> 6 weeks (Hands-on)</p>
-        <p>From faceting to cabochon cutting – operate professional lapidary equipment. Transform rough Ethiopian minerals into high‑value gems.</p>
-        <p style="margin-top: 1rem;"><i class="fas fa-tools" style="color: var(--gold);"></i> State‑of‑the‑art workshop</p>
-        <p><i class="fas fa-gem" style="color: var(--gold);"></i> Practical polishing & cutting</p>
-        <a href="register.html" class="btn-gold" style="margin-top: 1rem; display: inline-block;">Enroll Now →</a>
+      <!-- Course 2: Lapidary Introduction -->
+      <div class="course-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="course-image" style="background-image: url('https://raw.githubusercontent.com/Addis477/egcpro/main/Gem-Polishing-tourmaline-S_480x480.jpg');">
+          <div class="course-badge"><i class="fas fa-certificate"></i> Hands-On</div>
+        </div>
+        <div class="course-content">
+          <i class="fas fa-gripfire course-icon glowing-gem"></i>
+          <h2 class="course-title">Lapidary Introduction</h2>
+          <p style="color: #b0b5b8; margin-bottom: 1rem;">Learn to transform rough stones into magnificent gems with professional equipment.</p>
+          
+          <div class="course-meta">
+            <span class="meta-item"><i class="fas fa-clock"></i> 6 Weeks</span>
+            <span class="meta-item"><i class="fas fa-users"></i> Max 10 Students</span>
+            <span class="meta-item"><i class="fas fa-tools"></i> Professional Equipment</span>
+          </div>
+          
+          <div class="course-price">$1,500<span style="font-size: 0.9rem;"> / Early Bird $1,125</span></div>
+          
+          <ul class="course-features">
+            <li><i class="fas fa-check-circle"></i> Faceting & cabochon cutting</li>
+            <li><i class="fas fa-check-circle"></i> Professional lapidary equipment</li>
+            <li><i class="fas fa-check-circle"></i> Polishing techniques mastery</li>
+            <li><i class="fas fa-check-circle"></i> Rough to finished product training</li>
+            <li><i class="fas fa-check-circle"></i> Take home your creations</li>
+          </ul>
+          
+          <a href="register.html" class="btn-gold" style="width: 100%; justify-content: center;">Enroll Now →</a>
+        </div>
       </div>
-    </div>
-    
-    <div class="card" style="margin-top: 2rem; text-align: center;">
-      <h3>🎓 Special Package: Both Courses</h3>
-      <p style="font-size: 1.5rem; color: var(--gold); margin: 1rem 0;">20% Discount + Free Starter Kit</p>
-      <a href="register.html" class="btn-gold">Register for Combo Course</a>
     </div>
   </div>
 </section>
 
-<footer><p>© 2025 EGC Global Trading PLC – All Rights Reserved.</p></footer>
-<script src="js/main.js"></script>
+<!-- Combo Course Highlight -->
+<section style="background: linear-gradient(125deg, #0c1117, #070b0f);">
+  <div class="container">
+    <div class="premium-card" style="text-align: center; padding: 3rem;" data-aos="zoom-in">
+      <i class="fas fa-gem glowing-gem" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+      <h2 style="font-size: 2rem; margin-bottom: 0.5rem;">🎓 Complete Gemologist Program</h2>
+      <p style="font-size: 1.1rem; margin-bottom: 1rem;">Both Courses Combined - Save 25%</p>
+      <div class="course-price" style="font-size: 2rem;">$2,025<span style="font-size: 1rem;"> (Regular $2,700)</span></div>
+      <ul style="list-style: none; margin: 1.5rem 0; display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+        <li><i class="fas fa-check-circle" style="color: var(--gold);"></i> Both Certifications</li>
+        <li><i class="fas fa-check-circle" style="color: var(--gold);"></i> Free Starter Kit ($200 value)</li>
+        <li><i class="fas fa-check-circle" style="color: var(--gold);"></i> Priority Job Placement</li>
+      </ul>
+      <a href="register.html" class="btn-gold" style="font-size: 1.1rem; padding: 1rem 2.5rem;">Register for Combo Course →</a>
+    </div>
+  </div>
+</section>
+
+<!-- Short Courses Section -->
+<section>
+  <div class="container">
+    <h2 class="section-title" data-aos="fade-right">Short Courses & Workshops</h2>
+    <div class="grid-3">
+      <div class="premium-card" data-aos="fade-up" data-aos-delay="100">
+        <i class="fas fa-gem glowing-gem" style="font-size: 2rem;"></i>
+        <h3 style="margin: 1rem 0;">Ethiopian Opal Specialist</h3>
+        <p>Deep dive into the world of Ethiopian Welo opals - identification, grading, and valuation.</p>
+        <div class="course-meta" style="margin-top: 1rem;">
+          <span class="meta-item">3 Days</span>
+          <span class="meta-item">$350</span>
+        </div>
+        <a href="register.html" class="btn-outline" style="margin-top: 1rem; display: inline-block;">Learn More</a>
+      </div>
+      
+      <div class="premium-card" data-aos="fade-up" data-aos-delay="200">
+        <i class="fas fa-chart-line glowing-gem" style="font-size: 2rem;"></i>
+        <h3 style="margin: 1rem 0;">Gemstone Business & Export</h3>
+        <p>Learn how to start your own gemstone export business with international market insights.</p>
+        <div class="course-meta" style="margin-top: 1rem;">
+          <span class="meta-item">2 Days</span>
+          <span class="meta-item">$250</span>
+        </div>
+        <a href="register.html" class="btn-outline" style="margin-top: 1rem; display: inline-block;">Learn More</a>
+      </div>
+      
+      <div class="premium-card" data-aos="fade-up" data-aos-delay="300">
+        <i class="fas fa-mobile-alt glowing-gem" style="font-size: 2rem;"></i>
+        <h3 style="margin: 1rem 0;">Field Gemology</h3>
+        <p>Hands-on training in Ethiopian mining regions - learn to identify gems at the source.</p>
+        <div class="course-meta" style="margin-top: 1rem;">
+          <span class="meta-item">5 Days</span>
+          <span class="meta-item">$450</span>
+        </div>
+        <a href="register.html" class="btn-outline" style="margin-top: 1rem; display: inline-block;">Learn More</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Course Comparison Table -->
+<section style="background: linear-gradient(125deg, #0c1117, #070b0f);">
+  <div class="container">
+    <h2 class="section-title" data-aos="fade-right">Course Comparison</h2>
+    <div data-aos="fade-up">
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Gemstone Identification</th>
+            <th>Lapidary Introduction</th>
+            <th>Complete Program</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Duration</td><td>4-8 Weeks</td><td>6 Weeks</td><td>14 Weeks</td></tr>
+          <tr><td>Hands-on Training</td><td><i class="fas fa-check-circle check-icon"></i></td><td><i class="fas fa-check-circle check-icon"></i></td><td><i class="fas fa-check-circle check-icon"></i></td></tr>
+          <tr><td>Professional Equipment</td><td><i class="fas fa-check-circle check-icon"></i></td><td><i class="fas fa-check-circle check-icon"></i></td><td><i class="fas fa-check-circle check-icon"></i></td></tr>
+          <tr><td>International Certificate</td><td><i class="fas fa-check-circle check-icon"></i></td><td><i class="fas fa-check-circle check-icon"></i></td><td><i class="fas fa-check-circle check-icon"></i></td></tr>
+          <tr><td>Job Placement Support</td><td>Basic</td><td>Basic</td><td><i class="fas fa-check-circle check-icon"></i> Priority</td></tr>
+          <tr><td>Starter Kit Included</td><td>—</td><td>—</td><td><i class="fas fa-check-circle check-icon"></i> ($200 value)</td></tr>
+          <tr><td><strong>Investment</strong></td><td><strong>$1,200</strong></td><td><strong>$1,500</strong></td><td><strong>$2,025</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ Section -->
+<section>
+  <div class="container">
+    <h2 class="section-title" data-aos="fade-right">Frequently Asked Questions</h2>
+    <div class="grid-2">
+      <div>
+        <div class="faq-item" data-aos="fade-up" data-aos-delay="100">
+          <div class="faq-question">
+            <span>Do I need previous experience?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">No prior experience is required. Our courses are designed for beginners and professionals alike. We start with fundamentals and progress to advanced techniques.</div>
+        </div>
+        <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
+          <div class="faq-question">
+            <span>Is the certification internationally recognized?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">Yes! Our certification is recognized by leading gemological institutions worldwide and valued by international buyers and employers.</div>
+        </div>
+        <div class="faq-item" data-aos="fade-up" data-aos-delay="300">
+          <div class="faq-question">
+            <span>What equipment will I learn on?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">You'll train on professional-grade equipment including refractometers, spectroscopes, microscopes, faceting machines, and polishing equipment from Germany and Italy.</div>
+        </div>
+      </div>
+      <div>
+        <div class="faq-item" data-aos="fade-up" data-aos-delay="400">
+          <div class="faq-question">
+            <span>Can I start my own business after completion?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">Absolutely! Many of our graduates have started successful gemstone export businesses. Our business module covers market access, pricing, and international trade.</div>
+        </div>
+        <div class="faq-item" data-aos="fade-up" data-aos-delay="500">
+          <div class="faq-question">
+            <span>Are there payment plans available?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">Yes, we offer flexible payment plans. Contact our admissions team to discuss options that work for your budget.</div>
+        </div>
+        <div class="faq-item" data-aos="fade-up" data-aos-delay="600">
+          <div class="faq-question">
+            <span>What makes EGC Global different?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">We have foreign geologists on faculty, state-of-the-art equipment, direct industry connections, and a focus on Ethiopian gemstones specifically.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section style="background: linear-gradient(125deg, #0c1117, #070b0f);">
+  <div class="container">
+    <div class="premium-card" style="text-align: center; padding: 3rem;" data-aos="zoom-in">
+      <i class="fas fa-calendar-check glowing-gem" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+      <h2 style="font-size: 2rem; margin-bottom: 1rem;">Ready to Start Your Journey?</h2>
+      <p style="max-width: 600px; margin: 0 auto 1.5rem;">Limited seats available for each cohort. Secure your spot today and take the first step toward becoming a certified gemologist.</p>
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="register.html" class="btn-gold"><i class="fas fa-user-plus"></i> Register Now</a>
+        <a href="contact.html" class="btn-outline"><i class="fas fa-headset"></i> Talk to Advisor</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 EGC Global Trading PLC – All Rights Reserved.</p>
+  <p style="margin-top: 0.5rem; font-size: 0.8rem;">
+    <i class="fas fa-certificate"></i> Certified Gemstone Identification & Lapidary Training
+  </p>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({ duration: 800, once: true, offset: 50 });
+
+  // Mobile Navigation
+  const menuToggle = document.getElementById('menuToggle');
+  const sideNav = document.getElementById('sideNav');
+  const navOverlay = document.getElementById('navOverlay');
+  const closeNavBtn = document.getElementById('closeNavBtn');
+  function openNav() { sideNav.classList.add('open'); navOverlay.classList.add('active'); document.body.style.overflow = 'hidden'; }
+  function closeNav() { sideNav.classList.remove('open'); navOverlay.classList.remove('active'); document.body.style.overflow = ''; }
+  if (menuToggle) menuToggle.addEventListener('click', openNav);
+  if (closeNavBtn) closeNavBtn.addEventListener('click', closeNav);
+  if (navOverlay) navOverlay.addEventListener('click', closeNav);
+  document.querySelectorAll('.side-nav a').forEach(link => link.addEventListener('click', closeNav));
+
+  // FAQ Accordion
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.addEventListener('click', () => {
+      item.classList.toggle('active');
+      const icon = item.querySelector('.fa-chevron-down');
+      if (icon) {
+        icon.style.transform = item.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+      }
+    });
+  });
+</script>
 </body>
 </html>
