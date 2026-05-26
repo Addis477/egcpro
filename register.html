@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EGC Global | Register - Join Our Training</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="logo"><h1>EGC <span style="color:var(--gold);">Global</span></h1><p>TRAINING CENTRE</p></div>
+  <div class="desktop-nav">
+    <a href="index.html">Home</a><a href="courses.html">Courses</a><a href="about.html">About</a>
+    <a href="gallery.html">Gallery</a><a href="news.html">News</a><a href="register.html" class="register-btn">Register Now</a>
+  </div>
+  <div class="menu-icon" id="menuToggle"><i class="fas fa-bars"></i></div>
+</div>
+
+<div class="nav-overlay" id="navOverlay"></div>
+<div class="side-nav" id="sideNav">
+  <button class="close-nav" id="closeNavBtn"><i class="fas fa-times"></i></button>
+  <div class="side-logo"><h3>EGC <span>Global</span></h3><p>TRAINING CENTRE</p></div>
+  <ul><li><a href="index.html"><i class="fas fa-home"></i> Home</a></li><li><a href="courses.html"><i class="fas fa-gem"></i> Courses</a></li><li><a href="register.html"><i class="fas fa-user-plus"></i> Register</a></li><li><a href="admin-login.html"><i class="fas fa-lock"></i> Admin</a></li></ul>
+  <div class="side-footer">© 2025 EGC Global</div>
+</div>
+
+<section style="padding: 3rem 0;">
+  <div class="container">
+    <h1 class="section-title">Student Registration</h1>
+    <p>Fill out the form below to register for our gemstone training courses. Your application will be reviewed by our admin team.</p>
+    
+    <div id="alertContainer"></div>
+    
+    <form id="registerForm" style="max-width: 700px; margin-top: 2rem;">
+      <div class="form-group">
+        <label><i class="fas fa-user"></i> Full Name *</label>
+        <input type="text" id="fullName" required>
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-envelope"></i> Email *</label>
+        <input type="email" id="email" required>
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-phone"></i> Phone Number *</label>
+        <input type="tel" id="phone" required>
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-graduation-cap"></i> Select Course *</label>
+        <select id="course" required>
+          <option value="">-- Select Course --</option>
+          <option value="Gemstone Identification">Gemstone Identification (4 weeks)</option>
+          <option value="Lapidary Introduction">Lapidary Introduction (6 weeks)</option>
+          <option value="Both Courses">Both Courses (Combo Discount)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-comment"></i> Additional Notes</label>
+        <textarea id="notes" rows="3" placeholder="Any questions or special requirements..."></textarea>
+      </div>
+      <button type="submit" class="btn-gold"><i class="fas fa-paper-plane"></i> Submit Registration</button>
+    </form>
+  </div>
+</section>
+
+<footer><p>© 2025 EGC Global Trading PLC</p></footer>
+
+<script src="js/main.js"></script>
+<script>
+  document.getElementById('registerForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const registration = {
+      id: Date.now(),
+      fullName: document.getElementById('fullName').value,
+      email: document.getElementById('email').value,
+      phone: document.getElementById('phone').value,
+      course: document.getElementById('course').value,
+      notes: document.getElementById('notes').value,
+      status: 'pending',
+      registeredAt: new Date().toISOString()
+    };
+    
+    // Get existing registrations
+    let registrations = JSON.parse(localStorage.getItem('egc_registrations') || '[]');
+    registrations.push(registration);
+    localStorage.setItem('egc_registrations', JSON.stringify(registrations));
+    
+    // Show success message
+    const alertDiv = document.getElementById('alertContainer');
+    alertDiv.innerHTML = '<div class="alert alert-success"><i class="fas fa-check-circle"></i> Registration submitted successfully! Our admin will review and contact you soon.</div>';
+    document.getElementById('registerForm').reset();
+    
+    setTimeout(() => {
+      alertDiv.innerHTML = '';
+    }, 5000);
+  });
+</script>
+</body>
+</html>
