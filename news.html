@@ -352,45 +352,64 @@
   document.querySelectorAll('.side-nav a').forEach(link => link.addEventListener('click', closeNav));
 
   // ============================================
-  // FALLBACK IMAGES - USING RELIABLE SOURCES
-  // Unsplash Gemstone Images that ALWAYS work
+  // YOUR ACTUAL GITHUB IMAGES - CORRECT RAW URL FORMAT
+  // Using raw.githubusercontent.com (correct format)
   // ============================================
-  const FALLBACK_IMAGES = {
-    opal1: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&h=500&fit=crop",
-    opal2: "https://images.unsplash.com/photo-1614728263952-84ea256f9679?w=800&h=500&fit=crop",
-    opal3: "https://images.unsplash.com/photo-1507560461416-5fa9b1bbd56b?w=800&h=500&fit=crop",
-    emerald1: "https://images.unsplash.com/photo-1551615593-ef5fe247e8f7?w=800&h=500&fit=crop",
-    sapphire1: "https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=800&h=500&fit=crop",
-    lapidary1: "https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=800&h=500&fit=crop",
-    workshop1: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=500&fit=crop",
-    event1: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=800&h=500&fit=crop"
+  const YOUR_IMAGES = {
+    // Opals
+    opal1: "https://raw.githubusercontent.com/Addis477/egcpro/main/il_fullxfull.5975959857_aqa7.jpg",
+    opal2: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(3).jpeg",
+    opal3: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(4).jpeg",
+    opal4: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(5).jpeg",
+    opal5: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(6).jpeg",
+    opal6: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(7).jpeg",
+    opal7: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(8).jpeg",
+    opal8: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(9).jpeg",
+    
+    // Emeralds
+    emerald1: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(10).jpeg",
+    emerald2: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(11).jpeg",
+    emerald3: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(12).jpeg",
+    emerald4: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(13).jpeg",
+    
+    // Sapphires
+    sapphire1: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(14).jpeg",
+    sapphire2: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(15).jpeg",
+    sapphire3: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(16).jpeg",
+    
+    // Lapidary
+    lapidary1: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(17).jpeg",
+    lapidary2: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(18).jpeg",
+    lapidary3: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(19).jpeg",
+    lapidary4: "https://raw.githubusercontent.com/Addis477/egcpro/main/Gem-Polishing-tourmaline-S_480x480.jpg",
+    lapidary5: "https://raw.githubusercontent.com/Addis477/egcpro/main/5e604447ac5fd.jpg"
   };
 
-  // NEWS DATA WITH WORKING IMAGES
+  // NEWS DATA WITH YOUR ACTUAL GITHUB IMAGES
   const NEWS_DATA = [
-    { id: 1001, title: "🎉 GRAND OPENING - EGC Global Training Centre", type: "event", image: FALLBACK_IMAGES.event1, excerpt: "Join us for the official inauguration of Ethiopia's premier gemstone training facility on June 28, 2025.", content: "<p>We are thrilled to announce the grand opening of EGC Global Training Centre! Located in front of the British Embassy, our state-of-the-art facility is ready to welcome students.</p><p>The event will feature live gemstone identification demonstrations, lapidary workshop tours, networking sessions, and special discounts for early registrations.</p>", date: "2025-06-28T10:00:00.000Z", eventDate: "June 28, 2025", eventTime: "10:00 AM - 4:00 PM", eventLocation: "Infront of British Embassy, Addis Ababa" },
+    { id: 1001, title: "🎉 GRAND OPENING - EGC Global Training Centre", type: "event", image: YOUR_IMAGES.opal1, excerpt: "Join us for the official inauguration of Ethiopia's premier gemstone training facility on June 28, 2025.", content: "<p>We are thrilled to announce the grand opening of EGC Global Training Centre! Located in front of the British Embassy, our state-of-the-art facility is ready to welcome students.</p><p>The event will feature live gemstone identification demonstrations, lapidary workshop tours, networking sessions, and special discounts for early registrations.</p>", date: "2025-06-28T10:00:00.000Z", eventDate: "June 28, 2025", eventTime: "10:00 AM - 4:00 PM", eventLocation: "Infront of British Embassy, Addis Ababa" },
     
-    { id: 1002, title: "🌟 Ethiopian Opals: Global Demand Rising 40%", type: "announcement", image: FALLBACK_IMAGES.opal1, excerpt: "International demand for Ethiopian Welo opals has increased by 40% in 2025, creating unprecedented opportunities.", content: "<p>The global gemstone market is seeing unprecedented interest in Ethiopian opals. According to recent market reports, demand for Ethiopian precious opals has surged by 40% in the first half of 2025 alone.</p><p><strong>Key Market Insights:</strong></p><ul><li>European and Asian markets showing strongest growth</li><li>Prices for high-quality Welo opals up 25% year-over-year</li><li>Ethiopia now the world's leading source of precious opals</li></ul>", date: "2025-06-20T00:00:00.000Z" },
+    { id: 1002, title: "🌟 Ethiopian Opals: Global Demand Rising 40%", type: "announcement", image: YOUR_IMAGES.opal2, excerpt: "International demand for Ethiopian Welo opals has increased by 40% in 2025.", content: "<p>The global gemstone market is seeing unprecedented interest in Ethiopian opals. According to recent market reports, demand for Ethiopian precious opals has surged by 40% in the first half of 2025 alone.</p>", date: "2025-06-20T00:00:00.000Z" },
     
-    { id: 1003, title: "📅 Free Orientation Week - July 1-5, 2025", type: "event", image: FALLBACK_IMAGES.opal2, excerpt: "Experience our facilities and meet instructors during our free orientation week.", content: "<p>Prospective students are invited to attend our free orientation week from July 1-5, 2025. This is your chance to experience our world-class facilities and meet our international faculty.</p><p><strong>Orientation Schedule:</strong></p><ul><li>Day 1: Welcome & Facility Tour</li><li>Day 2: Gemstone Identification Demo</li><li>Day 3: Lapidary Workshop Preview</li><li>Day 4: Career Opportunities</li><li>Day 5: Q&A Session & Registration</li></ul>", date: "2025-06-15T00:00:00.000Z", eventDate: "July 1-5, 2025", eventTime: "9:00 AM - 5:00 PM", eventLocation: "EGC Global Training Centre" },
+    { id: 1003, title: "📅 Free Orientation Week - July 1-5, 2025", type: "event", image: YOUR_IMAGES.opal3, excerpt: "Experience our facilities and meet instructors during our free orientation week.", content: "<p>Prospective students are invited to attend our free orientation week from July 1-5, 2025. This is your chance to experience our world-class facilities and meet our international faculty.</p>", date: "2025-06-15T00:00:00.000Z", eventDate: "July 1-5, 2025", eventTime: "9:00 AM - 5:00 PM", eventLocation: "EGC Global Training Centre" },
     
-    { id: 1004, title: "💎 Premium Ethiopian Opal Showcase", type: "announcement", image: FALLBACK_IMAGES.opal3, excerpt: "Discover the mesmerizing play-of-color in Ethiopian precious opals - nature's masterpiece.", content: "<p>Ethiopian opals are renowned for their vibrant color flashes and unique play-of-color patterns. Our expert instructors will teach you how to identify, grade, and value these magnificent gemstones.</p><p><strong>What makes Ethiopian opals special:</strong></p><ul><li>Welo opals display full spectrum of colors</li><li>Hydrophane properties allow unique treatments</li><li>Larger crystal sizes than many other sources</li></ul>", date: "2025-06-10T00:00:00.000Z" },
+    { id: 1004, title: "💎 Premium Ethiopian Opal Showcase", type: "announcement", image: YOUR_IMAGES.opal4, excerpt: "Discover the mesmerizing play-of-color in Ethiopian precious opals.", content: "<p>Ethiopian opals are renowned for their vibrant color flashes and unique play-of-color patterns. Our expert instructors will teach you how to identify, grade, and value these magnificent gemstones.</p>", date: "2025-06-10T00:00:00.000Z" },
     
-    { id: 1005, title: "🔧 Lapidary Workshop Equipment Arrives", type: "announcement", image: FALLBACK_IMAGES.lapidary1, excerpt: "State-of-the-art faceting and polishing machines from Germany and Italy have been installed.", content: "<p>Our workshop is now equipped with professional-grade lapidary equipment from Germany and Italy.</p><ul><li>Faceting Machines: Ultra-tec and Facetron units</li><li>Cabochon Equipment: Professional grinding and polishing wheels</li><li>Diamond Saws: High-precision slab and trim saws</li><li>Polishing Systems: Advanced vibratory and flat lap units</li></ul>", date: "2025-06-05T00:00:00.000Z" },
+    { id: 1005, title: "🔧 Lapidary Workshop Equipment Arrives", type: "announcement", image: YOUR_IMAGES.lapidary4, excerpt: "State-of-the-art faceting and polishing machines from Germany and Italy have been installed.", content: "<p>Our workshop is now equipped with professional-grade lapidary equipment from Germany and Italy. Students will learn cutting, cabbing, and polishing techniques used by master gem cutters worldwide.</p>", date: "2025-06-05T00:00:00.000Z" },
     
-    { id: 1006, title: "💰 Early Bird Registration Discount - Save 25%", type: "announcement", image: FALLBACK_IMAGES.opal1, excerpt: "Register before July 15th and get 25% off on all courses plus free starter kit.", content: "<p>Take advantage of our early bird special! Register for any course before July 15, 2025, and receive 25% discount plus a free gemstone identification starter kit valued at $200.</p>", date: "2025-06-01T00:00:00.000Z" },
+    { id: 1006, title: "💰 Early Bird Registration Discount - Save 25%", type: "announcement", image: YOUR_IMAGES.opal5, excerpt: "Register before July 15th and get 25% off on all courses plus free starter kit.", content: "<p>Take advantage of our early bird special! Register for any course before July 15, 2025, and receive 25% discount plus a free gemstone identification starter kit valued at $200.</p>", date: "2025-06-01T00:00:00.000Z" },
     
-    { id: 1007, title: "💚 Ethiopian Emeralds: New Discovery", type: "announcement", image: FALLBACK_IMAGES.emerald1, excerpt: "New emerald deposits discovered in the Seba Boru region with exceptional clarity and color.", content: "<p>Ethiopia's emerald production is expanding with new discoveries in the Seba Boru region. The newly discovered emeralds show exceptional color saturation and clarity, rivaling stones from established sources.</p>", date: "2025-05-25T00:00:00.000Z" },
+    { id: 1007, title: "💚 Ethiopian Emeralds: New Discovery", type: "announcement", image: YOUR_IMAGES.emerald1, excerpt: "New emerald deposits discovered in the Seba Boru region with exceptional clarity.", content: "<p>Ethiopia's emerald production is expanding with new discoveries in the Seba Boru region. The newly discovered emeralds show exceptional color saturation and clarity.</p>", date: "2025-05-25T00:00:00.000Z" },
     
-    { id: 1008, title: "🌍 International Gemstone Expo 2025", type: "event", image: FALLBACK_IMAGES.event1, excerpt: "EGC Global will be exhibiting at the International Gemstone Expo in Dubai this November.", content: "<p>Visit our booth at the International Gemstone Expo to see Ethiopian gemstones and learn about our training programs. Meet our experts and discover opportunities in the gemstone trade.</p>", date: "2025-11-15T00:00:00.000Z", eventDate: "November 15-18, 2025", eventTime: "10:00 AM - 6:00 PM", eventLocation: "Dubai World Trade Centre" },
+    { id: 1008, title: "🌍 International Gemstone Expo 2025", type: "event", image: YOUR_IMAGES.opal6, excerpt: "EGC Global will be exhibiting at the International Gemstone Expo in Dubai this November.", content: "<p>Visit our booth at the International Gemstone Expo to see Ethiopian gemstones and learn about our training programs. Meet our experts and discover opportunities in the gemstone trade.</p>", date: "2025-11-15T00:00:00.000Z", eventDate: "November 15-18, 2025", eventTime: "10:00 AM - 6:00 PM", eventLocation: "Dubai World Trade Centre" },
     
-    { id: 1009, title: "🎓 Student Success Story: First Batch Graduates", type: "announcement", image: FALLBACK_IMAGES.workshop1, excerpt: "Our first batch of gemology students successfully completed their certification with outstanding results.", content: "<p>Congratulations to our first graduating class! These students are now ready to enter the gemstone export business with professional certification recognized worldwide.</p>", date: "2025-05-20T00:00:00.000Z" },
+    { id: 1009, title: "🎓 Student Success Story: First Batch Graduates", type: "announcement", image: YOUR_IMAGES.opal7, excerpt: "Our first batch of gemology students successfully completed their certification.", content: "<p>Congratulations to our first graduating class! These students are now ready to enter the gemstone export business with professional certification recognized worldwide.</p>", date: "2025-05-20T00:00:00.000Z" },
     
-    { id: 1010, title: "🔵 Blue Sapphires from Tigray Region", type: "announcement", image: FALLBACK_IMAGES.sapphire1, excerpt: "High-quality blue sapphires are being mined in northern Ethiopia, expanding the country's gemstone portfolio.", content: "<p>The Tigray region is producing beautiful blue sapphires with excellent color saturation. Our experts will teach you the characteristics of Ethiopian sapphires and how to evaluate them for international markets.</p>", date: "2025-05-15T00:00:00.000Z" },
+    { id: 1010, title: "🔵 Blue Sapphires from Tigray Region", type: "announcement", image: YOUR_IMAGES.sapphire1, excerpt: "High-quality blue sapphires are being mined in northern Ethiopia.", content: "<p>The Tigray region is producing beautiful blue sapphires with excellent color saturation. Our experts will teach you the characteristics of Ethiopian sapphires and how to evaluate them.</p>", date: "2025-05-15T00:00:00.000Z" },
     
-    { id: 1011, title: "✂️ Precision Faceting Workshop", type: "event", image: FALLBACK_IMAGES.lapidary1, excerpt: "Learn advanced faceting techniques from master lapidary artists in this intensive 5-day workshop.", content: "<p>Join our intensive faceting workshop where you'll learn to transform rough gemstones into brilliant finished gems. Limited seats available for this hands-on training.</p>", date: "2025-08-10T00:00:00.000Z", eventDate: "August 10-14, 2025", eventTime: "9:00 AM - 4:00 PM", eventLocation: "EGC Lapidary Workshop" },
+    { id: 1011, title: "✂️ Precision Faceting Workshop", type: "event", image: YOUR_IMAGES.lapidary5, excerpt: "Learn advanced faceting techniques from master lapidary artists.", content: "<p>Join our intensive faceting workshop where you'll learn to transform rough gemstones into brilliant finished gems. Limited seats available.</p>", date: "2025-08-10T00:00:00.000Z", eventDate: "August 10-14, 2025", eventTime: "9:00 AM - 4:00 PM", eventLocation: "EGC Lapidary Workshop" },
     
-    { id: 1012, title: "🏆 Ethiopian Gemstone Competition 2025", type: "event", image: FALLBACK_IMAGES.opal3, excerpt: "Submit your finest Ethiopian gemstones for a chance to win prizes and international recognition.", content: "<p>We're hosting Ethiopia's first gemstone competition! Open to all miners, collectors, and students. Categories include rough stones, finished gems, and jewelry design.</p>", date: "2025-09-01T00:00:00.000Z", eventDate: "September 30, 2025", eventTime: "2:00 PM - 6:00 PM", eventLocation: "EGC Global Training Centre" }
+    { id: 1012, title: "🏆 Ethiopian Gemstone Competition 2025", type: "event", image: YOUR_IMAGES.sapphire2, excerpt: "Submit your finest Ethiopian gemstones for a chance to win prizes.", content: "<p>We're hosting Ethiopia's first gemstone competition! Open to all miners, collectors, and students. Categories include rough stones, finished gems, and jewelry design.</p>", date: "2025-09-01T00:00:00.000Z", eventDate: "September 30, 2025", eventTime: "2:00 PM - 6:00 PM", eventLocation: "EGC Global Training Centre" }
   ];
 
   // Initialize localStorage
