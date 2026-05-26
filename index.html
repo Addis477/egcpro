@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>News & Event Detail | EGC Global Training Centre</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>EGC Global | Home - Gemstone Training Centre Ethiopia</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700;800&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -114,162 +114,132 @@
     .side-nav a:hover { color: var(--gold); transform: translateX(8px); }
     .side-footer { margin-top: auto; padding-top: 1.5rem; font-size: 0.75rem; color: #8d9a9e; border-top: 1px solid rgba(212,175,90,0.2); text-align: center; }
     
-    .container { max-width: 1000px; margin: 0 auto; padding: 0 2rem; }
-    section { padding: 2rem 0 4rem; }
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
+    section { padding: 5rem 0; }
     
-    .news-header-image {
+    .hero {
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      padding: 3rem 0;
+    }
+    .hero h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      font-weight: 800;
+      line-height: 1.15;
+      background: linear-gradient(135deg, #fff, var(--gold-light));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(212, 175, 90, 0.12);
+      border-left: 4px solid var(--gold);
+      padding: 0.5rem 1.2rem;
+      border-radius: 0 30px 30px 0;
+      margin-bottom: 1.5rem;
+    }
+    
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      position: relative;
+      display: inline-block;
+      margin-bottom: 2rem;
+      font-family: 'Cormorant Garamond', serif;
+    }
+    .section-title:after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+    }
+    
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+    
+    .premium-card {
+      background: linear-gradient(135deg, rgba(26, 32, 38, 0.9), rgba(18, 22, 28, 0.95));
+      backdrop-filter: blur(12px);
+      border-radius: 28px;
+      padding: 2rem;
+      border: 1px solid rgba(212, 175, 90, 0.2);
+      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .premium-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
       width: 100%;
-      height: 450px;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(212, 175, 90, 0.08), transparent);
+      transition: left 0.6s ease;
+    }
+    
+    .premium-card:hover::before { left: 100%; }
+    .premium-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--gold);
+      box-shadow: 0 25px 45px -12px rgba(212, 175, 90, 0.3);
+    }
+    
+    .news-card {
+      background: linear-gradient(135deg, rgba(26, 32, 38, 0.9), rgba(18, 22, 28, 0.95));
+      backdrop-filter: blur(12px);
+      border-radius: 28px;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      cursor: pointer;
+      border: 1px solid rgba(212, 175, 90, 0.2);
+    }
+    
+    .news-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--gold);
+      box-shadow: 0 25px 45px -12px rgba(212, 175, 90, 0.3);
+    }
+    
+    .news-image {
+      width: 100%;
+      height: 200px;
       background-size: cover;
       background-position: center;
-      border-radius: 28px;
-      margin-bottom: 2rem;
-      box-shadow: 0 15px 35px -10px rgba(0,0,0,0.5);
-      transition: transform 0.3s;
+      transition: transform 0.5s;
     }
     
-    .news-header-image:hover {
-      transform: scale(1.01);
-    }
+    .news-card:hover .news-image { transform: scale(1.03); }
     
-    .badge-event {
-      display: inline-block;
+    .event-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
       background: linear-gradient(135deg, var(--gold), var(--gold-dark));
       color: #000;
-      padding: 0.3rem 1rem;
-      border-radius: 30px;
-      font-size: 0.8rem;
-      font-weight: bold;
-      margin-bottom: 1rem;
-    }
-    
-    .event-detail-box {
-      background: linear-gradient(135deg, rgba(212, 175, 90, 0.12), rgba(212, 175, 90, 0.05));
-      backdrop-filter: blur(8px);
-      border-left: 4px solid var(--gold);
-      padding: 1.5rem;
+      padding: 0.25rem 0.75rem;
       border-radius: 20px;
-      margin: 1.5rem 0;
-    }
-    
-    .event-info-row {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 1rem;
-      flex-wrap: wrap;
-    }
-    
-    .event-label {
-      font-weight: 700;
-      min-width: 100px;
-      color: var(--gold);
-    }
-    
-    .event-icon {
-      font-size: 1.5rem;
-      color: var(--gold);
-      width: 40px;
-    }
-    
-    .content-body {
-      font-size: 1.05rem;
-      line-height: 1.7;
-      color: #ddd;
-    }
-    
-    .content-body p {
-      margin-bottom: 1rem;
-    }
-    
-    .content-body ul, .content-body ol {
-      margin: 1rem 0 1rem 2rem;
-    }
-    
-    .content-body li {
-      margin-bottom: 0.5rem;
-    }
-    
-    .share-buttons {
-      display: flex;
-      gap: 1rem;
-      margin-top: 2rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid rgba(212, 175, 90, 0.2);
-      flex-wrap: wrap;
-    }
-    
-    .share-btn {
-      background: rgba(255, 255, 255, 0.08);
-      padding: 0.5rem 1.2rem;
-      border-radius: 40px;
-      text-decoration: none;
-      color: var(--ivory);
-      font-size: 0.85rem;
-      transition: all 0.3s;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-    
-    .share-btn:hover {
-      background: var(--gold);
-      color: #000;
-      transform: translateY(-2px);
-    }
-    
-    .related-events {
-      margin-top: 3rem;
-    }
-    
-    .related-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-      margin-top: 1.5rem;
-    }
-    
-    .related-card {
-      background: linear-gradient(135deg, rgba(26, 32, 38, 0.9), rgba(18, 22, 28, 0.95));
-      border-radius: 20px;
-      overflow: hidden;
-      cursor: pointer;
-      transition: all 0.3s;
-      border: 1px solid rgba(212, 175, 90, 0.15);
-    }
-    
-    .related-card:hover {
-      transform: translateY(-5px);
-      border-color: var(--gold);
-      box-shadow: 0 15px 30px -12px rgba(212, 175, 90, 0.2);
-    }
-    
-    .related-img {
-      width: 100%;
-      height: 140px;
-      background-size: cover;
-      background-position: center;
-    }
-    
-    .related-content {
-      padding: 1rem;
-    }
-    
-    .related-date {
       font-size: 0.7rem;
-      color: var(--gold);
+      font-weight: bold;
     }
     
-    .related-title {
-      font-size: 0.9rem;
-      font-weight: 600;
-      margin-top: 0.3rem;
-    }
+    .news-content { padding: 1.2rem; }
+    .news-date { font-size: 0.7rem; color: var(--gold); margin-bottom: 0.5rem; }
+    .news-title { font-size: 1rem; margin-bottom: 0.5rem; }
+    .news-excerpt { font-size: 0.8rem; color: #b0b5b8; }
     
     .btn-gold {
       background: linear-gradient(135deg, var(--gold), var(--gold-dark));
       color: #000;
-      padding: 0.8rem 1.8rem;
+      padding: 0.9rem 2rem;
       font-weight: 700;
       border: none;
       border-radius: 40px;
@@ -280,17 +250,13 @@
       align-items: center;
       gap: 10px;
     }
-    
-    .btn-gold:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 25px -8px rgba(212, 175, 90, 0.5);
-    }
+    .btn-gold:hover { transform: translateY(-3px); box-shadow: 0 10px 25px -8px rgba(212,175,90,0.5); }
     
     .btn-outline {
       background: transparent;
       border: 1.5px solid var(--gold);
       color: var(--gold);
-      padding: 0.8rem 1.8rem;
+      padding: 0.9rem 2rem;
       border-radius: 40px;
       font-weight: 600;
       cursor: pointer;
@@ -300,43 +266,20 @@
       align-items: center;
       gap: 10px;
     }
-    
-    .btn-outline:hover {
-      background: var(--gold);
-      color: #000;
-      transform: translateY(-3px);
-    }
-    
-    .loading-spinner {
-      text-align: center;
-      padding: 3rem;
-    }
-    
-    .loading-spinner i {
-      font-size: 3rem;
-      color: var(--gold);
-      animation: spin 1s linear infinite;
-    }
-    
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
+    .btn-outline:hover { background: var(--gold); color: #000; transform: translateY(-3px); }
     
     footer {
       background: #05080c;
       text-align: center;
       padding: 2rem;
       border-top: 1px solid rgba(212, 175, 90, 0.15);
-      margin-top: 2rem;
     }
     
     @media (max-width: 768px) {
       .container { padding: 0 1.2rem; }
-      .news-header-image { height: 220px; }
-      .event-info-row { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
-      .event-icon { width: auto; }
-      .share-buttons { justify-content: center; }
+      section { padding: 3rem 0; }
+      .section-title { font-size: 2rem; }
+      .hero { min-height: 70vh; }
     }
   </style>
 </head>
@@ -353,11 +296,11 @@
 <div class="top-bar">
   <div class="logo"><h1>EGC <span style="color:var(--gold);">Global</span></h1><p>TRAINING CENTRE</p></div>
   <div class="desktop-nav">
-    <a href="index.html">Home</a>
+    <a href="index.html" class="active">Home</a>
     <a href="courses.html">Courses</a>
     <a href="about.html">About</a>
     <a href="gallery.html">Gallery</a>
-    <a href="news.html" class="active">News</a>
+    <a href="news.html">News</a>
     <a href="register.html" class="register-btn">Register Now</a>
   </div>
   <div class="menu-icon" id="menuToggle"><i class="fas fa-bars"></i></div>
@@ -379,32 +322,79 @@
   <div class="side-footer"><i class="fas fa-certificate"></i> Ethiopian Gemstones<br>© 2025 EGC Global</div>
 </div>
 
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge" data-aos="fade-right">
+      <i class="fas fa-gem glowing-gem" style="font-size: 0.9rem;"></i> Grand Opening Soon – Join the Journey
+    </div>
+    <h2 data-aos="fade-up" data-aos-delay="100">Unlock Ethiopia's<br>Mineral & Gemstone Wealth</h2>
+    <p style="font-size: 1.1rem; max-width: 600px; margin: 1.5rem 0; color: #cfd5d4;" data-aos="fade-up" data-aos-delay="200">Foreign geologists, world-class certified instructors, and state-of-the-art lapidary facilities. Become a certified gemologist and export Ethiopian treasures globally.</p>
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap;" data-aos="fade-up" data-aos-delay="300">
+      <a href="register.html" class="btn-gold"><i class="fas fa-graduation-cap glowing-gem"></i> Enroll Now</a>
+      <a href="courses.html" class="btn-outline"><i class="fas fa-book-open"></i> Explore Courses</a>
+    </div>
+  </div>
+</section>
+
 <section>
   <div class="container">
-    <div id="newsDetailContainer">
-      <div class="loading-spinner">
-        <i class="fas fa-gem glowing-gem"></i>
-        <p>Loading...</p>
+    <h2 class="section-title" data-aos="fade-right">Why Choose EGC Global</h2>
+    <div class="grid-3" style="margin-top: 2rem;">
+      <div class="premium-card" data-aos="fade-up" data-aos-delay="100">
+        <i class="fas fa-chalkboard-user glowing-gem" style="font-size: 2.5rem;"></i>
+        <h3 style="margin: 1rem 0;">International Faculty</h3>
+        <p>Foreign geologists and certified gemologists share cutting-edge industry knowledge.</p>
+      </div>
+      <div class="premium-card" data-aos="fade-up" data-aos-delay="200">
+        <i class="fas fa-microscope glowing-gem" style="font-size: 2.5rem;"></i>
+        <h3 style="margin: 1rem 0;">Modern Gem Lab</h3>
+        <p>State-of-the-art equipment for gemstone identification and certification.</p>
+      </div>
+      <div class="premium-card" data-aos="fade-up" data-aos-delay="300">
+        <i class="fas fa-gem glowing-gem" style="font-size: 2.5rem;"></i>
+        <h3 style="margin: 1rem 0;">Export Ready</h3>
+        <p>Get direct pathways into the international gemstone export business.</p>
       </div>
     </div>
-    
-    <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap; justify-content: space-between;">
-      <a href="news.html" class="btn-outline"><i class="fas fa-arrow-left"></i> Back to News</a>
-      <a href="register.html" class="btn-gold"><i class="fas fa-calendar-check"></i> Register for Course</a>
+  </div>
+</section>
+
+<section style="background: linear-gradient(125deg, #0c1117, #070b0f);">
+  <div class="container">
+    <h2 class="section-title" data-aos="fade-right">Latest News & Events</h2>
+    <div id="newsPreview" class="grid-2"></div>
+    <div style="text-align: center; margin-top: 2rem;" data-aos="fade-up">
+      <a href="news.html" class="btn-outline">View All News <i class="fas fa-arrow-right"></i></a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="grid-2">
+      <div data-aos="fade-right">
+        <h2 class="section-title">Get In Touch</h2>
+        <p style="margin: 1rem 0;"><i class="fas fa-phone glowing-gem"></i> <strong>+251 928 11 11 44</strong> / <strong>+251 928 33 33 88</strong></p>
+        <p><i class="fas fa-map-marker-alt glowing-gem"></i> Infront Of British Embassy, Birhanu Tefera Building 2nd Floor, Addis Ababa</p>
+        <a href="contact.html" class="btn-gold" style="margin-top: 1.5rem; display: inline-block;">Contact Us</a>
+      </div>
+      <div class="premium-card" data-aos="fade-left">
+        <h3><i class="fas fa-clock glowing-gem"></i> Opening Hours</h3>
+        <p style="margin-top: 1rem;">Monday - Friday: 9:00 AM - 5:30 PM<br>Saturday: 10:00 AM - 2:00 PM</p>
+        <p style="margin-top: 1rem;"><strong>Grand Opening Week:</strong> Extended hours + Free Orientation</p>
+      </div>
     </div>
   </div>
 </section>
 
 <footer>
   <p>© 2025 EGC Global Trading PLC – All Rights Reserved.</p>
-  <p style="margin-top: 0.5rem; font-size: 0.8rem;">
-    <i class="fas fa-certificate"></i> Certified Gemstone Identification & Lapidary Training
-  </p>
+  <p style="margin-top: 0.5rem; font-size: 0.8rem;"><i class="fas fa-certificate"></i> Certified Gemstone Identification & Lapidary Training</p>
 </footer>
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-  AOS.init({ duration: 600, once: true });
+  AOS.init({ duration: 800, once: true, offset: 50 });
   
   // Mobile Navigation
   const menuToggle = document.getElementById('menuToggle');
@@ -426,212 +416,66 @@
       "https://raw.githubusercontent.com/Addis477/egcpro/main/il_fullxfull.5975959857_aqa7.jpg",
       "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(3).jpeg",
       "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(4).jpeg",
-      "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(5).jpeg",
-      "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(6).jpeg",
-      "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(7).jpeg",
-      "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(8).jpeg",
-      "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(9).jpeg"
+      "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(5).jpeg"
     ],
     emeralds: [
       "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(10).jpeg",
-      "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(11).jpeg",
-      "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(12).jpeg",
-      "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(13).jpeg"
-    ],
-    sapphires: [
-      "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(14).jpeg",
-      "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(15).jpeg",
-      "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(16).jpeg"
+      "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(11).jpeg"
     ],
     lapidary: [
-      "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(17).jpeg",
-      "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(18).jpeg",
-      "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(19).jpeg",
       "https://raw.githubusercontent.com/Addis477/egcpro/main/Gem-Polishing-tourmaline-S_480x480.jpg",
       "https://raw.githubusercontent.com/Addis477/egcpro/main/5e604447ac5fd.jpg"
     ]
   };
 
-  // Complete news dataset (same as news.html)
-  const NEWS_DATA = [
-    { id: 1001, title: "🎉 GRAND OPENING - EGC Global Training Centre", type: "event", image: YOUR_IMAGES.opals[0], excerpt: "Join us for the official inauguration of Ethiopia's premier gemstone training facility on June 28, 2025.", content: "<p>We are thrilled to announce the grand opening of EGC Global Training Centre! Located in front of the British Embassy, our state-of-the-art facility is ready to welcome students.</p><p><strong>Event Highlights:</strong></p><ul><li>Live gemstone identification demonstrations by foreign geologists</li><li>Lapidary workshop tours with state-of-the-art equipment</li><li>Networking session with industry experts from USA, Germany, and India</li><li>Special discounts for early registrations (up to 25% off)</li><li>Free refreshments and certificate of attendance</li><li>Tour of our gemstone collection and laboratory</li></ul><p>Don't miss this opportunity to launch your career in the gemstone export business! Limited seats available for the opening ceremony.</p>", date: "2025-06-28T10:00:00.000Z", eventDate: "June 28, 2025", eventTime: "10:00 AM - 4:00 PM", eventLocation: "Infront of British Embassy, Birhanu Tefera Building, 2nd Floor, Addis Ababa", eventPrice: "Free Entry" },
-    
-    { id: 1002, title: "🌟 Ethiopian Opals: Global Demand Rising", type: "announcement", image: YOUR_IMAGES.opals[1], excerpt: "International demand for Ethiopian Welo opals has increased by 40% in 2025.", content: "<p>The global gemstone market is seeing unprecedented interest in Ethiopian opals. According to recent market reports, demand for Ethiopian precious opals has surged by 40% in the first half of 2025 alone.</p><p><strong>Key Market Insights:</strong></p><ul><li>European and Asian markets showing strongest growth</li><li>Prices for high-quality Welo opals up 25% year-over-year</li><li>Ethiopia now the world's leading source of precious opals</li><li>Increased demand for certified, professionally graded stones</li></ul><p>Our training program prepares students to meet this demand with professional certification recognized worldwide. Graduates are equipped to identify, grade, and market Ethiopian opals to international buyers.</p>", date: "2025-06-20T00:00:00.000Z" },
-    
-    { id: 1003, title: "📅 Free Orientation Week - July 1-5, 2025", type: "event", image: YOUR_IMAGES.opals[2], excerpt: "Experience our facilities and meet instructors during our free orientation week.", content: "<p>Prospective students are invited to attend our free orientation week from July 1-5, 2025. This is your chance to experience our world-class facilities and meet our international faculty.</p><p><strong>Orientation Schedule:</strong></p><ul><li><strong>Day 1:</strong> Welcome & Facility Tour - Meet the instructors</li><li><strong>Day 2:</strong> Gemstone Identification Demo - Hands-on with equipment</li><li><strong>Day 3:</strong> Lapidary Workshop Preview - See cutting and polishing</li><li><strong>Day 4:</strong> Career Opportunities in Gemstone Export</li><li><strong>Day 5:</strong> Q&A Session & Registration Assistance</li></ul><p>All sessions are free! Bring your questions and discover how you can start your journey in the gemstone industry.</p>", date: "2025-06-15T00:00:00.000Z", eventDate: "July 1-5, 2025", eventTime: "9:00 AM - 5:00 PM", eventLocation: "EGC Global Training Centre, Addis Ababa", eventPrice: "FREE" },
-    
-    { id: 1004, title: "💎 Premium Ethiopian Opal Showcase", type: "announcement", image: YOUR_IMAGES.opals[3], excerpt: "Discover the mesmerizing play-of-color in Ethiopian precious opals.", content: "<p>Ethiopian opals are renowned for their vibrant color flashes and unique play-of-color patterns. Our expert instructors will teach you how to identify, grade, and value these magnificent gemstones.</p><p><strong>What makes Ethiopian opals special:</strong></p><ul><li>Welo opals display full spectrum of colors</li><li>Hydrophane properties allow unique treatments</li><li>Larger crystal sizes than many other sources</li><li>Affordable entry point for new collectors and investors</li></ul><p>Join our gemstone identification course to learn professional grading techniques and market valuation methods for Ethiopian opals.</p>", date: "2025-06-10T00:00:00.000Z" },
-    
-    { id: 1005, title: "🔧 Lapidary Workshop Equipment Arrives", type: "announcement", image: YOUR_IMAGES.lapidary[0], excerpt: "State-of-the-art faceting and polishing machines from Germany and Italy have been installed.", content: "<p>Our workshop is now equipped with professional-grade lapidary equipment from Germany and Italy. This includes:</p><ul><li><strong>Faceting Machines:</strong> Ultra-tec and Facetron units for precision cutting</li><li><strong>Cabochon Equipment:</strong> Professional grinding and polishing wheels</li><li><strong>Diamond Saws:</strong> High-precision slab and trim saws</li><li><strong>Polishing Systems:</strong> Advanced vibratory and flat lap units</li></ul><p>Students will learn cutting, cabbing, and polishing techniques used by master gem cutters worldwide. Our lapidary program offers hands-on experience with these professional machines, preparing you for real-world gemstone processing.</p>", date: "2025-06-05T00:00:00.000Z" }
+  // NEWS DATA FOR HOMEPAGE PREVIEW WITH YOUR IMAGES
+  const NEWS_PREVIEW_DATA = [
+    { id: 1001, title: "🎉 GRAND OPENING - EGC Global Training Centre", type: "event", image: YOUR_IMAGES.opals[0], excerpt: "Join us for the official inauguration of Ethiopia's premier gemstone training facility on June 28, 2025.", date: "2025-06-28" },
+    { id: 1002, title: "🌟 Ethiopian Opals: Global Demand Rising", type: "announcement", image: YOUR_IMAGES.opals[1], excerpt: "International demand for Ethiopian Welo opals has increased by 40% in 2025.", date: "2025-06-20" },
+    { id: 1003, title: "📅 Free Orientation Week - July 1-5, 2025", type: "event", image: YOUR_IMAGES.opals[2], excerpt: "Experience our facilities and meet instructors during our free orientation week.", date: "2025-06-15" },
+    { id: 1004, title: "🔧 Lapidary Workshop Equipment Arrives", type: "announcement", image: YOUR_IMAGES.lapidary[0], excerpt: "State-of-the-art faceting and polishing machines from Germany and Italy have been installed.", date: "2025-06-05" }
   ];
 
-  // Function to get news by ID
-  function getNewsById(id) {
-    return NEWS_DATA.find(n => n.id === id) || null;
-  }
-
-  // Function to get related events (excluding current)
-  function getRelatedEvents(currentId, currentType) {
-    return NEWS_DATA.filter(n => n.id !== currentId && n.type === 'event').slice(0, 3);
-  }
-
-  // Function to render the news detail
-  function renderNewsDetail() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const newsId = parseInt(urlParams.get('id'));
-    const article = getNewsById(newsId);
-    const container = document.getElementById('newsDetailContainer');
-    
-    if (!article) {
-      container.innerHTML = `
-        <div style="background: linear-gradient(135deg, rgba(26,32,38,0.9), rgba(18,22,28,0.95)); border-radius: 28px; padding: 3rem; text-align: center; border: 1px solid rgba(212,175,90,0.2);">
-          <i class="fas fa-exclamation-triangle" style="font-size: 4rem; color: var(--gold);"></i>
-          <h2 style="margin: 1rem 0;">News/Event Not Found</h2>
-          <p>The article you're looking for doesn't exist or has been removed.</p>
-          <a href="news.html" class="btn-gold" style="margin-top: 1rem; display: inline-block;">Browse All News</a>
-        </div>
-      `;
-      return;
+  // Initialize localStorage with preview data if empty
+  (function initData() {
+    let existingNews = localStorage.getItem('egc_news');
+    if (!existingNews || JSON.parse(existingNews).length === 0) {
+      // Store full news data
+      const fullNewsData = [
+        { id: 1001, title: "🎉 GRAND OPENING - EGC Global Training Centre", type: "event", image: YOUR_IMAGES.opals[0], excerpt: "Join us for the official inauguration of Ethiopia's premier gemstone training facility on June 28, 2025.", content: "<p>We are thrilled to announce the grand opening of EGC Global Training Centre!</p>", date: "2025-06-28T10:00:00.000Z", eventDate: "June 28, 2025", eventTime: "10:00 AM - 4:00 PM", eventLocation: "Infront of British Embassy, Addis Ababa" },
+        { id: 1002, title: "🌟 Ethiopian Opals: Global Demand Rising", type: "announcement", image: YOUR_IMAGES.opals[1], excerpt: "International demand for Ethiopian Welo opals has increased by 40% in 2025.", content: "<p>The global gemstone market is seeing unprecedented interest in Ethiopian opals.</p>", date: "2025-06-20T00:00:00.000Z" },
+        { id: 1003, title: "📅 Free Orientation Week - July 1-5, 2025", type: "event", image: YOUR_IMAGES.opals[2], excerpt: "Experience our facilities and meet instructors during our free orientation week.", content: "<p>Prospective students are invited to attend our free orientation week.</p>", date: "2025-06-15T00:00:00.000Z", eventDate: "July 1-5, 2025", eventTime: "9:00 AM - 5:00 PM", eventLocation: "EGC Global Training Centre" },
+        { id: 1004, title: "💎 Premium Ethiopian Opal Showcase", type: "announcement", image: YOUR_IMAGES.opals[3], excerpt: "Discover the mesmerizing play-of-color in Ethiopian precious opals.", content: "<p>Ethiopian opals are renowned for their vibrant color flashes.</p>", date: "2025-06-10T00:00:00.000Z" },
+        { id: 1005, title: "🔧 Lapidary Workshop Equipment Arrives", type: "announcement", image: YOUR_IMAGES.lapidary[0], excerpt: "State-of-the-art faceting and polishing machines from Germany and Italy have been installed.", content: "<p>Our workshop is now equipped with professional-grade lapidary equipment.</p>", date: "2025-06-05T00:00:00.000Z" },
+        { id: 1006, title: "💚 Ethiopian Emeralds Discovery", type: "announcement", image: YOUR_IMAGES.emeralds[0], excerpt: "New emerald deposits discovered in the Seba Boru region.", content: "<p>Ethiopia's emerald production is expanding with new discoveries.</p>", date: "2025-05-20T00:00:00.000Z" }
+      ];
+      localStorage.setItem('egc_news', JSON.stringify(fullNewsData));
     }
-    
-    const isEvent = article.type === 'event';
-    const formattedDate = new Date(article.date).toLocaleDateString('en-US', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-    
-    // Build event details HTML
-    const eventDetailsHTML = isEvent ? `
-      <div class="event-detail-box" data-aos="fade-up">
-        <div class="event-info-row">
-          <i class="fas fa-calendar-alt event-icon glowing-gem"></i>
-          <div>
-            <span class="event-label">Date & Time:</span>
-            <strong>${article.eventDate || formattedDate}</strong>
-            ${article.eventTime ? `<br><span style="font-size: 0.85rem;">⏰ ${article.eventTime}</span>` : ''}
-          </div>
+    let existingRegistrations = localStorage.getItem('egc_registrations');
+    if (!existingRegistrations || JSON.parse(existingRegistrations).length === 0) {
+      localStorage.setItem('egc_registrations', JSON.stringify([]));
+    }
+  })();
+
+  // Load preview news for homepage
+  function loadNewsPreview() {
+    const previewDiv = document.getElementById('newsPreview');
+    previewDiv.innerHTML = NEWS_PREVIEW_DATA.map(item => `
+      <div class="news-card" onclick="location.href='news-detail.html?id=${item.id}'" data-aos="fade-up">
+        <div style="position: relative;">
+          <div class="news-image" style="background-image: url('${item.image}'); background-size: cover; background-position: center;"></div>
+          ${item.type === 'event' ? '<div class="event-badge"><i class="fas fa-calendar-alt"></i> EVENT</div>' : ''}
         </div>
-        <div class="event-info-row">
-          <i class="fas fa-map-marker-alt event-icon glowing-gem"></i>
-          <div>
-            <span class="event-label">Location:</span>
-            <strong>${article.eventLocation || 'Infront of British Embassy, Birhanu Tefera Building, 2nd Floor, Addis Ababa'}</strong>
-          </div>
-        </div>
-        ${article.eventPrice ? `
-        <div class="event-info-row">
-          <i class="fas fa-ticket-alt event-icon glowing-gem"></i>
-          <div>
-            <span class="event-label">Price:</span>
-            <strong style="color: var(--gold);">${article.eventPrice}</strong>
-          </div>
-        </div>
-        ` : ''}
-        <div style="margin-top: 1.5rem;">
-          <a href="register.html" class="btn-gold" style="display: inline-flex; align-items: center; gap: 8px;">
-            <i class="fas fa-user-plus"></i> Register for this Event
-          </a>
+        <div class="news-content">
+          <div class="news-date"><i class="far fa-calendar-alt"></i> ${new Date(item.date).toLocaleDateString()}</div>
+          <h3 class="news-title">${item.title.length > 50 ? item.title.substring(0, 50) + '...' : item.title}</h3>
+          <p class="news-excerpt">${item.excerpt.substring(0, 80)}...</p>
         </div>
       </div>
-    ` : '';
-    
-    // Main content
-    container.innerHTML = `
-      <div data-aos="fade-down">
-        <div class="badge-event">
-          <i class="${isEvent ? 'fas fa-calendar-check' : 'fas fa-newspaper'}"></i> 
-          ${isEvent ? 'UPCOMING EVENT' : 'ANNOUNCEMENT'}
-        </div>
-        
-        <div class="news-header-image" style="background-image: url('${article.image}'); background-size: cover; background-position: center;" data-aos="zoom-in"></div>
-        
-        <h1 style="font-size: clamp(1.8rem, 5vw, 2.5rem); margin: 1rem 0 0.5rem;" data-aos="fade-right">${article.title}</h1>
-        
-        <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; color: #aaa; font-size: 0.85rem;" data-aos="fade-right">
-          <span><i class="far fa-calendar-alt"></i> Published: ${formattedDate}</span>
-          ${isEvent ? `<span><i class="fas fa-clock"></i> Event: ${article.eventDate || formattedDate}</span>` : ''}
-          <span><i class="fas fa-tag"></i> ${isEvent ? 'Event' : 'News'}</span>
-        </div>
-        
-        <div style="height: 2px; background: linear-gradient(90deg, var(--gold), transparent); margin: 1rem 0 2rem 0;" data-aos="fade-left"></div>
-        
-        ${eventDetailsHTML}
-        
-        <div class="content-body" data-aos="fade-up">
-          ${article.content}
-        </div>
-        
-        <div class="share-buttons" data-aos="fade-up">
-          <span style="margin-right: 0.5rem;">Share this ${isEvent ? 'event' : 'article'}:</span>
-          <a href="#" class="share-btn" onclick="shareOnFacebook()"><i class="fab fa-facebook-f"></i> Facebook</a>
-          <a href="#" class="share-btn" onclick="shareOnTwitter()"><i class="fab fa-twitter"></i> Twitter</a>
-          <a href="#" class="share-btn" onclick="shareOnWhatsApp()"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-          <a href="#" class="share-btn" onclick="shareOnLinkedIn()"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
-        </div>
-      </div>
-    `;
-    
-    // Load related events
-    loadRelatedEvents(article.id);
+    `).join('');
   }
   
-  // Function to load related events
-  function loadRelatedEvents(currentId) {
-    const related = getRelatedEvents(currentId);
-    if (related.length === 0) return;
-    
-    const relatedHTML = `
-      <div class="related-events" data-aos="fade-up">
-        <h3><i class="fas fa-calendar-week glowing-gem"></i> Upcoming Events You Might Like</h3>
-        <div class="related-grid">
-          ${related.map(event => `
-            <div class="related-card" onclick="location.href='news-detail.html?id=${event.id}'">
-              <div class="related-img" style="background-image: url('${event.image}'); background-size: cover;"></div>
-              <div class="related-content">
-                <div class="related-date"><i class="fas fa-calendar-alt"></i> ${event.eventDate || new Date(event.date).toLocaleDateString()}</div>
-                <div class="related-title">${event.title.length > 50 ? event.title.substring(0, 50) + '...' : event.title}</div>
-              </div>
-            </div>
-          `).join('')}
-        </div>
-      </div>
-    `;
-    
-    document.getElementById('newsDetailContainer').insertAdjacentHTML('beforeend', relatedHTML);
-  }
-  
-  // Share functions
-  function shareOnFacebook() {
-    const url = encodeURIComponent(window.location.href);
-    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank', 'width=600,height=400');
-  }
-  
-  function shareOnTwitter() {
-    const url = encodeURIComponent(window.location.href);
-    const title = encodeURIComponent(document.querySelector('h1')?.innerText || 'EGC Global Event');
-    window.open(`https://twitter.com/intent/tweet?text=${title}&url=${url}`, '_blank', 'width=600,height=400');
-  }
-  
-  function shareOnWhatsApp() {
-    const url = window.location.href;
-    window.open(`https://wa.me/?text=${encodeURIComponent('Check out this event at EGC Global: ' + url)}`, '_blank');
-  }
-  
-  function shareOnLinkedIn() {
-    const url = encodeURIComponent(window.location.href);
-    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank', 'width=600,height=400');
-  }
-  
-  // Make share functions global
-  window.shareOnFacebook = shareOnFacebook;
-  window.shareOnTwitter = shareOnTwitter;
-  window.shareOnWhatsApp = shareOnWhatsApp;
-  window.shareOnLinkedIn = shareOnLinkedIn;
-  
-  // Initialize
-  renderNewsDetail();
+  loadNewsPreview();
 </script>
 </body>
 </html>
