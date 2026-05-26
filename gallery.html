@@ -2,45 +2,252 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gemstone Gallery | EGC Global Training Centre</title>
-  <link rel="stylesheet" href="css/style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Gemstone Gallery | EGC Global - Ethiopian Gemstones Collection</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700;800&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- AOS Animation Library -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <style>
-    .gallery-item {
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --gold: #d4af5a;
+      --gold-light: #e6c97e;
+      --gold-dark: #b8923e;
+      --dark-bg: #0a0c0f;
+      --card-bg: rgba(26, 32, 38, 0.85);
+      --ivory: #f2ede4;
+      --glow: rgba(212, 175, 90, 0.4);
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--dark-bg);
+      color: var(--ivory);
+      overflow-x: hidden;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #121418; }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+
+    /* Animated Background */
+    .animated-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      background: radial-gradient(circle at 20% 30%, #0f1a1f, #050708);
+    }
+    
+    /* Floating Gemstones */
+    .floating-gem {
+      position: fixed;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.12;
+      animation: floatGem 20s infinite ease-in-out;
+    }
+    
+    @keyframes floatGem {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-30px) rotate(10deg); }
+    }
+    
+    /* Glowing Gem Icon */
+    .glowing-gem {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      filter: drop-shadow(0 0 8px var(--gold));
+      animation: gemPulse 2s infinite;
+    }
+    
+    @keyframes gemPulse {
+      0%, 100% { filter: drop-shadow(0 0 5px var(--gold)); transform: scale(1); }
+      50% { filter: drop-shadow(0 0 20px var(--gold)); transform: scale(1.05); }
+    }
+    
+    /* Premium Card Styles */
+    .premium-card {
+      background: linear-gradient(135deg, rgba(26, 32, 38, 0.9), rgba(18, 22, 28, 0.95));
+      backdrop-filter: blur(12px);
+      border-radius: 28px;
+      padding: 2rem;
+      border: 1px solid rgba(212, 175, 90, 0.2);
+      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
       position: relative;
       overflow: hidden;
-      border-radius: 16px;
-      cursor: pointer;
     }
-    .gallery-img {
+    
+    /* Navigation */
+    .top-bar {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem 2rem; background: rgba(10,12,15,0.85); backdrop-filter: blur(12px);
+      position: sticky; top: 0; z-index: 99; border-bottom: 1px solid rgba(212,175,90,0.25);
+      animation: slideDown 0.5s ease;
+    }
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .logo h1 { font-size: 1.6rem; background: linear-gradient(135deg, var(--gold-light), var(--gold)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .logo p { font-size: 0.65rem; letter-spacing: 2.5px; color: var(--gold); }
+    .desktop-nav { display: none; gap: 2rem; align-items: center; }
+    .desktop-nav a { color: var(--ivory); text-decoration: none; font-weight: 500; transition: all 0.3s; position: relative; }
+    .desktop-nav a::after {
+      content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px;
+      background: var(--gold); transition: width 0.3s;
+    }
+    .desktop-nav a:hover::after, .desktop-nav a.active::after { width: 100%; }
+    .desktop-nav a:hover { color: var(--gold); }
+    .register-btn { background: var(--gold); color: #000 !important; padding: 0.5rem 1.3rem; border-radius: 40px; font-weight: 700 !important; }
+    .register-btn::after { display: none; }
+    .menu-icon { font-size: 1.8rem; color: var(--gold); cursor: pointer; transition: transform 0.2s; }
+    .menu-icon:hover { transform: scale(1.1); }
+    @media (min-width: 992px) { .menu-icon { display: none; } .desktop-nav { display: flex; } }
+    
+    /* Side Navigation */
+    .nav-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(10, 12, 15, 0.95); backdrop-filter: blur(12px);
+      z-index: 1000; visibility: hidden; opacity: 0; transition: all 0.3s ease;
+    }
+    .nav-overlay.active { visibility: visible; opacity: 1; }
+    .side-nav {
+      position: fixed; top: 0; right: -100%; width: min(85%, 380px); height: 100%;
+      background: linear-gradient(165deg, #12181f 0%, #0a0e12 100%);
+      box-shadow: -8px 0 40px rgba(0,0,0,0.6); z-index: 1001;
+      transition: right 0.35s cubic-bezier(0.2,0.9,0.4,1.1);
+      padding: 2rem 1.8rem; display: flex; flex-direction: column;
+      border-left: 2px solid var(--gold);
+    }
+    .side-nav.open { right: 0; }
+    .close-nav { background: none; border: none; color: var(--gold); font-size: 2rem; cursor: pointer; align-self: flex-end; }
+    .side-nav ul { list-style: none; flex: 1; }
+    .side-nav li { margin: 1.5rem 0; }
+    .side-nav a { color: var(--ivory); text-decoration: none; font-size: 1.2rem; font-weight: 500; display: flex; align-items: center; gap: 14px; transition: 0.25s; }
+    .side-nav a i { width: 28px; color: var(--gold); }
+    .side-nav a:hover { color: var(--gold); transform: translateX(8px); }
+    .side-footer { margin-top: auto; padding-top: 1.5rem; font-size: 0.75rem; color: #8d9a9e; border-top: 1px solid rgba(212,175,90,0.2); text-align: center; }
+    
+    /* Container */
+    .container { max-width: 1400px; margin: 0 auto; padding: 0 2rem; }
+    section { padding: 4rem 0; }
+    
+    /* Hero Section */
+    .gallery-hero {
+      min-height: 50vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      padding: 3rem 0;
+    }
+    .gallery-hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 8vw, 5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      background: linear-gradient(135deg, #fff, var(--gold-light));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(212, 175, 90, 0.12);
+      border-left: 4px solid var(--gold);
+      padding: 0.5rem 1.2rem;
+      border-radius: 0 30px 30px 0;
+      margin-bottom: 1.5rem;
+    }
+    
+    /* Section Title */
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      position: relative;
+      display: inline-block;
+      margin-bottom: 2rem;
+      font-family: 'Cormorant Garamond', serif;
+    }
+    .section-title:after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+    }
+    
+    /* Gallery Grid */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+    
+    /* Gallery Item */
+    .gallery-item {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      cursor: pointer;
+      background: linear-gradient(135deg, rgba(26, 32, 38, 0.9), rgba(18, 22, 28, 0.95));
+      border: 1px solid rgba(212, 175, 90, 0.2);
+      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+    
+    .gallery-item:hover {
+      transform: translateY(-10px);
+      border-color: var(--gold);
+      box-shadow: 0 25px 45px -12px rgba(212, 175, 90, 0.3);
+    }
+    
+    .gallery-image {
       width: 100%;
-      height: 250px;
+      height: 280px;
       background-size: cover;
       background-position: center;
-      transition: transform 0.4s ease;
+      transition: transform 0.5s ease;
     }
-    .gallery-item:hover .gallery-img {
+    
+    .gallery-item:hover .gallery-image {
       transform: scale(1.05);
     }
+    
     .gallery-overlay {
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
-      background: linear-gradient(transparent, rgba(0,0,0,0.8));
-      padding: 1rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+      padding: 1.5rem;
       transform: translateY(100%);
       transition: transform 0.3s ease;
     }
+    
     .gallery-item:hover .gallery-overlay {
       transform: translateY(0);
     }
-    .gallery-overlay h4 {
+    
+    .gallery-overlay h3 {
+      font-size: 1.2rem;
       color: var(--gold);
       margin-bottom: 0.25rem;
     }
+    
+    .gallery-overlay p {
+      font-size: 0.8rem;
+      color: #ccc;
+    }
+    
+    /* Lightbox */
     .lightbox {
       display: none;
       position: fixed;
@@ -48,21 +255,26 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.95);
+      background: rgba(0, 0, 0, 0.95);
       z-index: 2000;
       justify-content: center;
       align-items: center;
       cursor: pointer;
+      backdrop-filter: blur(10px);
     }
+    
     .lightbox.active {
       display: flex;
     }
+    
     .lightbox-img {
       max-width: 90%;
       max-height: 80%;
-      border-radius: 12px;
+      border-radius: 16px;
       border: 3px solid var(--gold);
+      box-shadow: 0 0 50px rgba(212, 175, 90, 0.3);
     }
+    
     .close-lightbox {
       position: absolute;
       top: 20px;
@@ -70,16 +282,86 @@
       font-size: 2.5rem;
       color: var(--gold);
       cursor: pointer;
+      transition: transform 0.2s;
+    }
+    
+    .close-lightbox:hover {
+      transform: scale(1.1);
+    }
+    
+    .lightbox-caption {
+      position: absolute;
+      bottom: 30px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      color: var(--gold);
+      font-size: 1rem;
+    }
+    
+    /* Category Filter */
+    .filter-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    
+    .filter-btn {
+      background: transparent;
+      border: 1px solid rgba(212, 175, 90, 0.3);
+      color: var(--ivory);
+      padding: 0.5rem 1.5rem;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .filter-btn.active {
+      background: var(--gold);
+      color: #000;
+      border-color: var(--gold);
+    }
+    
+    .filter-btn:hover:not(.active) {
+      background: rgba(212, 175, 90, 0.15);
+    }
+    
+    footer {
+      background: #05080c;
+      text-align: center;
+      padding: 2.5rem;
+      border-top: 1px solid rgba(212, 175, 90, 0.15);
+    }
+    
+    @media (max-width: 768px) {
+      .container { padding: 0 1.2rem; }
+      section { padding: 2.5rem 0; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .gallery-image { height: 220px; }
     }
   </style>
 </head>
 <body>
 
+<!-- Animated Background -->
+<div class="animated-bg"></div>
+<div class="floating-gem" style="top: 10%; left: 3%; animation-duration: 25s;">
+  <i class="fas fa-gem" style="font-size: 70px; color: var(--gold); opacity: 0.1;"></i>
+</div>
+<div class="floating-gem" style="bottom: 20%; right: 5%; animation-duration: 18s;">
+  <i class="fas fa-diamond" style="font-size: 90px; color: var(--gold); opacity: 0.08;"></i>
+</div>
+
 <div class="top-bar">
   <div class="logo"><h1>EGC <span style="color:var(--gold);">Global</span></h1><p>TRAINING CENTRE</p></div>
   <div class="desktop-nav">
-    <a href="index.html">Home</a><a href="courses.html">Courses</a><a href="about.html">About</a>
-    <a href="gallery.html" class="active">Gallery</a><a href="news.html">News</a><a href="register.html" class="register-btn">Register Now</a>
+    <a href="index.html">Home</a>
+    <a href="courses.html">Courses</a>
+    <a href="about.html">About</a>
+    <a href="gallery.html" class="active">Gallery</a>
+    <a href="news.html">News</a>
+    <a href="register.html" class="register-btn">Register Now</a>
   </div>
   <div class="menu-icon" id="menuToggle"><i class="fas fa-bars"></i></div>
 </div>
@@ -95,85 +377,151 @@
     <li><a href="gallery.html"><i class="fas fa-images"></i> Gallery</a></li>
     <li><a href="news.html"><i class="fas fa-newspaper"></i> News</a></li>
     <li><a href="register.html"><i class="fas fa-user-plus"></i> Register</a></li>
+    <li><a href="admin-login.html"><i class="fas fa-lock"></i> Admin</a></li>
   </ul>
-  <div class="side-footer">© 2025 EGC Global</div>
+  <div class="side-footer"><i class="fas fa-certificate"></i> Ethiopian Gemstones<br>© 2025 EGC Global</div>
 </div>
+
+<!-- Hero Section -->
+<section class="gallery-hero">
+  <div class="container">
+    <div class="hero-badge" data-aos="fade-right">
+      <i class="fas fa-gem glowing-gem" style="font-size: 0.9rem;"></i> Ethiopian Treasures
+    </div>
+    <h1 data-aos="fade-up" data-aos-delay="100">Gemstone Gallery</h1>
+    <p style="font-size: 1.1rem; max-width: 700px; margin-top: 1.5rem; color: #cfd5d4;" data-aos="fade-up" data-aos-delay="200">
+      Explore the beauty of Ethiopian gemstones - from rough crystals to polished masterpieces. Each stone tells a unique story of nature's artistry.
+    </p>
+  </div>
+</section>
+
+<!-- Gallery Section -->
+<section>
+  <div class="container">
+    <div class="filter-buttons" data-aos="fade-up">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="opal">Opals</button>
+      <button class="filter-btn" data-filter="emerald">Emeralds</button>
+      <button class="filter-btn" data-filter="sapphire">Sapphires</button>
+      <button class="filter-btn" data-filter="lapidary">Lapidary</button>
+    </div>
+    
+    <div id="galleryGrid" class="gallery-grid"></div>
+  </div>
+</section>
 
 <!-- Lightbox -->
 <div id="lightbox" class="lightbox" onclick="closeLightbox()">
   <span class="close-lightbox">&times;</span>
   <img id="lightboxImg" class="lightbox-img" src="" alt="">
+  <div id="lightboxCaption" class="lightbox-caption"></div>
 </div>
 
-<section style="padding: 3rem 0;">
-  <div class="container">
-    <h1 class="section-title">Gemstone Gallery</h1>
-    <p style="margin-bottom: 2rem;">Explore the beauty of Ethiopian gemstones - from rough crystals to polished masterpieces.</p>
-    
-    <div class="grid-3" id="galleryGrid"></div>
-  </div>
-</section>
+<footer>
+  <p>© 2025 EGC Global Trading PLC – All Rights Reserved.</p>
+  <p style="margin-top: 0.5rem; font-size: 0.8rem;">
+    <i class="fas fa-certificate"></i> Certified Gemstone Identification & Lapidary Training
+  </p>
+</footer>
 
-<footer><p>© 2025 EGC Global Trading PLC – All Rights Reserved.</p></footer>
-
-<script src="js/main.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-  // Gallery data with placeholder images (using Unsplash/placekitten alternatives and Font Awesome icons for visual)
+  AOS.init({ duration: 800, once: true, offset: 50 });
+
+  // Mobile Navigation
+  const menuToggle = document.getElementById('menuToggle');
+  const sideNav = document.getElementById('sideNav');
+  const navOverlay = document.getElementById('navOverlay');
+  const closeNavBtn = document.getElementById('closeNavBtn');
+  function openNav() { sideNav.classList.add('open'); navOverlay.classList.add('active'); document.body.style.overflow = 'hidden'; }
+  function closeNav() { sideNav.classList.remove('open'); navOverlay.classList.remove('active'); document.body.style.overflow = ''; }
+  if (menuToggle) menuToggle.addEventListener('click', openNav);
+  if (closeNavBtn) closeNavBtn.addEventListener('click', closeNav);
+  if (navOverlay) navOverlay.addEventListener('click', closeNav);
+  document.querySelectorAll('.side-nav a').forEach(link => link.addEventListener('click', closeNav));
+
+  // Gallery Data with your actual images from GitHub
   const galleryItems = [
-    { id: 1, title: "Ethiopian Opal", category: "Opals", description: "Premium Welo opal with vibrant play-of-color", color: "#d4af5a", icon: "fas fa-gem", bgGradient: "linear-gradient(135deg, #1a1a2e, #16213e)" },
-    { id: 2, title: "Rough Emerald", category: "Emeralds", description: "Raw green emerald crystals from Seba Boru", color: "#2ecc71", icon: "fas fa-gem", bgGradient: "linear-gradient(135deg, #0f2027, #203a43)" },
-    { id: 3, title: "Blue Sapphire", category: "Sapphires", description: "Cornflower blue sapphire, 5.2 carats", color: "#3498db", icon: "fas fa-gem", bgGradient: "linear-gradient(135deg, #1e3c72, #2a5298)" },
-    { id: 4, title: "Lapidary Workshop", category: "Facilities", description: "State-of-the-art cutting and polishing equipment", color: "#e67e22", icon: "fas fa-tools", bgGradient: "linear-gradient(135deg, #3a1c0e, #5a2e17)" },
-    { id: 5, title: "Gem Lab", category: "Training", description: "Professional gemstone identification laboratory", color: "#9b59b6", icon: "fas fa-microscope", bgGradient: "linear-gradient(135deg, #2c0b3e, #4a1d6e)" },
-    { id: 6, title: "Student Practice", category: "Training", description: "Hands-on learning with rough gemstones", color: "#1abc9c", icon: "fas fa-graduation-cap", bgGradient: "linear-gradient(135deg, #0f4c3f, #1e6b58)" }
+    // Opals
+    { id: 1, title: "Premium Ethiopian Welo Opal", category: "opal", description: "Vibrant play-of-color with red, green, and blue flashes", image: "https://raw.githubusercontent.com/Addis477/egcpro/main/il_fullxfull.5975959857_aqa7.jpg", thumbnail: "https://raw.githubusercontent.com/Addis477/egcpro/main/il_fullxfull.5975959857_aqa7.jpg" },
+    { id: 2, title: "Rough Opal Crystal", category: "opal", description: "Natural rough opal showing magnificent color patterns", image: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(3).jpeg", thumbnail: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(3).jpeg" },
+    { id: 3, title: "Polished Opal Cabochon", category: "opal", description: "Expertly polished cabochon with fire", image: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(5).jpeg", thumbnail: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(5).jpeg" },
+    { id: 4, title: "Ethiopian Black Opal", category: "opal", description: "Rare black opal with exceptional brightness", image: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(6).jpeg", thumbnail: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(6).jpeg" },
+    { id: 5, title: "Opal Rough Collection", category: "opal", description: "Collection of premium rough opals", image: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(8).jpeg", thumbnail: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(8).jpeg" },
+    { id: 6, title: "Hydrophane Opal", category: "opal", description: "Hydrophane opal showing unique water absorption properties", image: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(9).jpeg", thumbnail: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(9).jpeg" },
+    
+    // Emeralds
+    { id: 7, title: "Ethiopian Emerald", category: "emerald", description: "Green emerald crystals from Seba Boru region", image: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(10).jpeg", thumbnail: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(10).jpeg" },
+    { id: 8, title: "Emerald in Matrix", category: "emerald", description: "Natural emerald crystal in host rock", image: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(11).jpeg", thumbnail: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(11).jpeg" },
+    { id: 9, title: "Faceted Emerald", category: "emerald", description: "Brilliant cut emerald with exceptional clarity", image: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(12).jpeg", thumbnail: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(12).jpeg" },
+    { id: 10, title: "Emerald Crystal Cluster", category: "emerald", description: "Beautiful emerald crystal formation", image: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(13).jpeg", thumbnail: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(13).jpeg" },
+    
+    // Sapphires
+    { id: 11, title: "Blue Sapphire", category: "sapphire", description: "Cornflower blue sapphire from Tigray", image: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(14).jpeg", thumbnail: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(14).jpeg" },
+    { id: 12, title: "Sapphire Crystal", category: "sapphire", description: "Natural blue sapphire crystal", image: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(15).jpeg", thumbnail: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(15).jpeg" },
+    { id: 13, title: "Fancy Sapphire", category: "sapphire", description: "Multi-color sapphire variety", image: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(16).jpeg", thumbnail: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(16).jpeg" },
+    
+    // Lapidary & Processing
+    { id: 14, title: "Gem Polishing Process", category: "lapidary", description: "Tourmaline being polished on lapidary equipment", image: "https://raw.githubusercontent.com/Addis477/egcpro/main/Gem-Polishing-tourmaline-S_480x480.jpg", thumbnail: "https://raw.githubusercontent.com/Addis477/egcpro/main/Gem-Polishing-tourmaline-S_480x480.jpg" },
+    { id: 15, title: "Lapidary Workshop", category: "lapidary", description: "Professional faceting machine in action", image: "https://raw.githubusercontent.com/Addis477/egcpro/main/5e604447ac5fd.jpg", thumbnail: "https://raw.githubusercontent.com/Addis477/egcpro/main/5e604447ac5fd.jpg" },
+    { id: 16, title: "Gem Cutting Demonstration", category: "lapidary", description: "Expert lapidary artist at work", image: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(17).jpeg", thumbnail: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(17).jpeg" },
+    { id: 17, title: "Precision Faceting", category: "lapidary", description: "Creating perfect facets on gemstone", image: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(18).jpeg", thumbnail: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(18).jpeg" },
+    { id: 18, title: "Finished Gemstones", category: "lapidary", description: "Collection of polished Ethiopian gemstones", image: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(19).jpeg", thumbnail: "https://raw.githubusercontent.com/Addis477/egcpro/main/images%20(19).jpeg" }
   ];
-  
-  const galleryGrid = document.getElementById('galleryGrid');
-  
-  function openLightbox(imgSrc) {
+
+  let currentFilter = 'all';
+
+  function renderGallery() {
+    const filtered = currentFilter === 'all' 
+      ? galleryItems 
+      : galleryItems.filter(item => item.category === currentFilter);
+    
+    const container = document.getElementById('galleryGrid');
+    
+    container.innerHTML = filtered.map(item => `
+      <div class="gallery-item" data-category="${item.category}" onclick="openLightbox('${item.image}', '${item.title}', '${item.description}')">
+        <div class="gallery-image" style="background-image: url('${item.thumbnail}'); background-size: cover; background-position: center;">
+        </div>
+        <div class="gallery-overlay">
+          <h3><i class="fas fa-gem" style="color: var(--gold);"></i> ${item.title}</h3>
+          <p>${item.description}</p>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Lightbox functions
+  function openLightbox(imageSrc, title, description) {
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightboxImg');
-    lightboxImg.src = imgSrc;
+    const lightboxCaption = document.getElementById('lightboxCaption');
+    lightboxImg.src = imageSrc;
+    lightboxCaption.innerHTML = `<i class="fas fa-gem"></i> ${title} - ${description}`;
     lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
   }
   
   function closeLightbox() {
     document.getElementById('lightbox').classList.remove('active');
+    document.body.style.overflow = '';
   }
-  
-  // Generate gallery items with visual placeholder (stylized gem cards with icons)
-  galleryGrid.innerHTML = galleryItems.map(item => `
-    <div class="gallery-item" onclick="openLightbox('${item.icon === 'fas fa-gem' ? `https://placehold.co/600x400/2c3e50/d4af5a?text=${encodeURIComponent(item.title)}+Gemstone` : `https://placehold.co/600x400/1a1a2e/d4af5a?text=${encodeURIComponent(item.title)}`}')">
-      <div class="gallery-img" style="background: ${item.bgGradient}; display: flex; align-items: center; justify-content: center; flex-direction: column;">
-        <i class="${item.icon}" style="font-size: 4rem; color: ${item.color}; margin-bottom: 1rem;"></i>
-        <p style="color: white; text-align: center; padding: 0 1rem;">${item.title}</p>
-      </div>
-      <div class="gallery-overlay">
-        <h4>${item.title}</h4>
-        <p style="font-size: 0.8rem;">${item.description}</p>
-        <small style="color: ${item.color};">${item.category}</small>
-      </div>
-    </div>
-  `).join('');
-  
-  // Add real placeholder images after load for better visual
-  setTimeout(() => {
-    const placeholders = [
-      "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&h=250&fit=crop",
-      "https://images.unsplash.com/photo-1614728263952-84ea256f9679?w=400&h=250&fit=crop",
-      "https://images.unsplash.com/photo-1507560461416-5fa9b1bbd56b?w=400&h=250&fit=crop",
-      "https://images.unsplash.com/photo-1551615593-ef5fe247e8f7?w=400&h=250&fit=crop",
-      "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=400&h=250&fit=crop",
-      "https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=400&h=250&fit=crop"
-    ];
-    document.querySelectorAll('.gallery-img').forEach((img, index) => {
-      if (placeholders[index]) {
-        img.style.backgroundImage = `url(${placeholders[index]})`;
-        img.style.backgroundSize = 'cover';
-        img.innerHTML = '';
-      }
+
+  // Filter functionality
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentFilter = btn.getAttribute('data-filter');
+      renderGallery();
     });
-  }, 100);
+  });
+
+  // Initial render
+  renderGallery();
+
+  // Make functions global for onclick
+  window.openLightbox = openLightbox;
+  window.closeLightbox = closeLightbox;
 </script>
 </body>
 </html>
